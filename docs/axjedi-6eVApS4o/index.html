@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AxJedi — Proof of Concept Report | Novaryn</title>
 <meta name="robots" content="noindex, nofollow">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:false, theme:'dark', themeVariables:{primaryColor:'#9b8760',primaryTextColor:'#eef2f7',primaryBorderColor:'#9b8760',lineColor:'#9aa5b7',secondaryColor:'#111720',tertiaryColor:'#0a0d12',background:'#111720',mainBkg:'#111720',nodeBorder:'#9b8760',clusterBkg:'#111720',titleColor:'#eef2f7',edgeLabelBackground:'#111720'}});</script>
 <style>
 :root{--bg:#0a0d12;--surface:#111720;--text:#eef2f7;--accent:#9b8760}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -59,6 +61,13 @@ function checkPassword() {
 function unlockContent() {
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('content').classList.add('unlocked');
+  
+  // After content is visible, tell Mermaid to render diagrams
+  setTimeout(function() {
+    if (typeof mermaid !== 'undefined') {
+      mermaid.run();
+    }
+  }, 100);
 }
 
 document.getElementById('pwInput').addEventListener('keypress', function(e) {
