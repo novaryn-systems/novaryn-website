@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Novaryn — Premium AI systems for real operational work</title>
+  <style>
+    :root {
+      --bg: #0a0d12;
+      --surface: #111720;
+      --text: #eef2f7;
+      --text-muted: #9aa5b7;
+      --text-subtle: #aab4c3;
+      --gold: #9b8760;
+      --border: rgba(255,255,255,.09);
+      --border-strong: rgba(255,255,255,.12);
+      --overlay: rgba(255,255,255,.02);
+      --overlay-light: rgba(255,255,255,.03);
+      --gold-overlay: rgba(155,135,96,.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    body {
+      padding: 0;
+    }
+
+    /* Layout Containers */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 34px;
+      }
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 48px;
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+      margin: 0 0 16px;
+      font-weight: 600;
+    }
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 58px;
+      }
+    }
+
+    h2 {
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin: 0 0 12px;
+      font-weight: 600;
+    }
+
+    h3 {
+      font-size: 18px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+
+    .eyebrow {
+      font-size: 9.5px;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 0 0 8px;
+      font-weight: 500;
+    }
+
+    .lead {
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--text);
+      max-width: 680px;
+      margin: 0 0 12px;
+    }
+
+    .subtext {
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--text-muted);
+    }
+
+    p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    ul, ol {
+      margin: 0 0 16px;
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+
+    a:hover {
+      opacity: 0.8;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0 80px;
+      background:
+        radial-gradient(circle at 14% 6%, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 18%),
+        radial-gradient(circle at 100% 18%, var(--gold-overlay) 0%, rgba(155,135,96,0) 28%),
+        linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+      position: relative;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .hero-content {
+        grid-template-columns: 0.76fr 1.24fr;
+        gap: 32px;
+      }
+    }
+
+    .hero-logo {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .hero-logo img {
+      width: 100%;
+      height: auto;
+      border: 1px solid rgba(255,255,255,.075);
+      border-radius: 16px;
+      padding: 8px;
+      background: linear-gradient(180deg, rgba(255,255,255,.026), rgba(255,255,255,.01));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+    }
+
+    .hero-text h1 {
+      margin-bottom: 8px;
+    }
+
+    .hero-tagline {
+      font-size: 22px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin: 0 0 16px;
+      max-width: 520px;
+      font-weight: 600;
+    }
+
+    .hero-note {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border-left: 2px solid var(--gold);
+      background: rgba(255,255,255,.014);
+      border-radius: 8px;
+      color: #e5ebf3;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    /* Pill Bar */
+    .pillbar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .pill {
+      padding: 6px 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 999px;
+      background: rgba(255,255,255,.018);
+      font-size: 11px;
+      color: #dfe5ef;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* Buttons */
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      border: 1px solid var(--gold);
+      border-radius: 999px;
+      background: var(--gold);
+      color: #000;
+      font-size: 11px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      opacity: 0.85;
+    }
+
+    .button-outline {
+      background: transparent;
+      color: var(--gold);
+    }
+
+    .button-outline:hover {
+      background: rgba(155,135,96,.1);
+    }
+
+    /* Section */
+    section {
+      padding: 60px 0;
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .section-header .eyebrow {
+      text-align: center;
+    }
+
+    .section-header h2 {
+      text-align: center;
+    }
+
+    /* Card */
+    .card {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: linear-gradient(180deg, rgba(255,255,255,.022), rgba(255,255,255,.011));
+      min-height: 0;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--border-strong);
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .grid.cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    /* Kicker */
+    .kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .num {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,.075);
+      background: rgba(255,255,255,.02);
+      font-size: 10px;
+      font-weight: 600;
+      color: #dde5ef;
+      flex-shrink: 0;
+    }
+
+    .topic {
+      font-size: 11px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #dde5ef;
+      font-weight: 500;
+    }
+
+    /* Band (2-column quote/proof area) */
+    .band {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .band {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+    }
+
+    .band-card {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--overlay);
+    }
+
+    .band-card h3 {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bcc5d3;
+      margin-bottom: 8px;
+    }
+
+    .band-card p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    /* CTA Section */
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .cta-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+    }
+
+    .cta-card {
+      padding: 18px;
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.034), rgba(255,255,255,.015));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+    }
+
+    .cta-card h3 {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bcc5d3;
+      margin: 0 0 10px;
+    }
+
+    .cta-card p {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .cta-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .cta-card li {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0 32px;
+      margin-top: 60px;
+      background: linear-gradient(180deg, rgba(255,255,255,.01) 0%, var(--bg) 100%);
+    }
+
+    footer .container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    @media (min-width: 768px) {
+      footer .container {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .footer-section h4 {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #bcc5d3;
+      margin: 0 0 12px;
+      font-weight: 600;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-section li {
+      margin-bottom: 8px;
+    }
+
+    .footer-section a {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .footer-section a:hover {
+      color: var(--gold);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #aab4c3;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Accessibility & Print */
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+
+      .button {
+        border: 1px solid #000;
+        background: transparent;
+        color: #000;
+      }
+
+      section {
+        page-break-inside: avoid;
+      }
+    }
+
+    /* Dark mode indicator */
+    @media (prefers-color-scheme: light) {
+      body {
+        background: #f5f7fa;
+        color: #1a1f2e;
+      }
+
+      .card {
+        background: white;
+        border-color: #e0e4ea;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-logo">
+          <img src="../../projects/axjedi/onepager/shared/novaryn-logo-candidate-b-better.jpg" alt="Novaryn" />
+        </div>
+        <div class="hero-text">
+          <div class="eyebrow">Introducing Novaryn</div>
+          <h1>Novaryn</h1>
+          <p class="hero-tagline">Premium AI systems for real operational work.</p>
+          <p class="lead">We build intelligent infrastructure that doesn't hallucinate. Every system is grounded in domain expertise, real customer pain, and measurable operational value.</p>
+          <div class="pillbar">
+            <div class="pill">Hallucination-aware</div>
+            <div class="pill">Domain-grounded</div>
+            <div class="pill">Operationally proven</div>
+          </div>
+          <div style="margin-top: 24px;">
+            <button class="button">Start Free Trial</button>
+            <button class="button button-outline" style="margin-left: 12px;">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Novaryn -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow">The Problem</div>
+        <h2>Why Novaryn Exists</h2>
+      </div>
+
+      <div class="band">
+        <div class="band-card">
+          <h3>The Challenge</h3>
+          <p>Most AI systems hallucinate. They give confident-sounding answers about things they don't actually understand. In operational contexts — code review, infrastructure decisions, change management — hallucination is a liability, not a feature.</p>
+        </div>
+        <div class="band-card">
+          <h3>Our Answer</h3>
+          <p>We build systems that ground themselves in real domain knowledge, explicit context, and careful verification. We say "I don't know" when we don't. We prove operational value before shipping to production.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products & Solutions -->
+  <section style="background: linear-gradient(180deg, rgba(155,135,96,.04) 0%, var(--bg) 100%);">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow">Products</div>
+        <h2>Built for Real Work</h2>
+      </div>
+
+      <div class="grid cols-3">
+        <div class="card">
+          <div class="kicker">
+            <div class="num">01</div>
+            <div class="topic">AxJedi</div>
+          </div>
+          <h3>AxJedi</h3>
+          <p class="subtext">AI-assistanted leverage for complex AX environments.</p>
+          <p>Discovery, impact assessment, change support, and knowledge capture for Microsoft Dynamics AX/X++ codebases. Built for consultants who need to move fast without losing precision.</p>
+          <a href="#axjedi">Learn more →</a>
+        </div>
+
+        <div class="card">
+          <div class="kicker">
+            <div class="num">02</div>
+            <div class="topic">Coming Soon</div>
+          </div>
+          <h3>Enterprise Platforms</h3>
+          <p class="subtext">Operational AI for complex enterprise systems.</p>
+          <p>We're extending the AxJedi model to other domains: SAP, custom monoliths, and mission-critical infrastructure. Same principle: grounded understanding, no hallucination, real value.</p>
+          <a href="#contact">Get notified →</a>
+        </div>
+
+        <div class="card">
+          <div class="kicker">
+            <div class="num">03</div>
+            <div class="topic">Custom</div>
+          </div>
+          <h3>Custom Deployments</h3>
+          <p class="subtext">Tailored solutions for your domain.</p>
+          <p>If your system has specialized knowledge requirements, we can build it. Talk to us about your codebase, your pain points, and your operational constraints.</p>
+          <a href="#contact">Schedule a conversation →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AxJedi Deep Dive (featured product) -->
+  <section id="axjedi">
+    <div class="container">
+      <div class="section-header">
+        <h2>AxJedi: Rethinking AX at Scale</h2>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>What AxJedi Does</h3>
+          <ul>
+            <li><strong>Faster discovery:</strong> Understand exported AX code without weeks of manual review.</li>
+            <li><strong>Impact clarity:</strong> See dependencies, risks, and change scope before you commit.</li>
+            <li><strong>Change support:</strong> Get draft changes with a human review gate — never auto-apply.</li>
+            <li><strong>Knowledge capture:</strong> Build institutional memory across projects and teams.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Why It Matters</h3>
+          <p>AX expertise is scarce. Much of it lives in a few senior consultants' heads. When they leave or get busy, projects stall.</p>
+          <p>AxJedi gives you a workbench — a thinking partner that knows the codebase. It makes expert time go further. It reduces ramp-up time. It lets junior consultants move faster without losing quality.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="kicker">
+            <div class="num">✓</div>
+            <div class="topic">Core Strength</div>
+          </div>
+          <h3>Hallucination-Aware</h3>
+          <p>Unlike generic AI, AxJedi knows what it doesn't know. If your AX function isn't in the exported code, it says so. It doesn't make things up.</p>
+        </div>
+
+        <div class="card">
+          <div class="kicker">
+            <div class="num">✓</div>
+            <div class="topic">Core Strength</div>
+          </div>
+          <h3>Review-First, Never Auto-Apply</h3>
+          <p>Change suggestions are drafts. A human reviews them before anything touches production. We believe in verification, not automation theater.</p>
+        </div>
+
+        <div class="card">
+          <div class="kicker">
+            <div class="num">✓</div>
+            <div class="topic">Core Strength</div>
+          </div>
+          <h3>Reusable Across Customers</h3>
+          <p>The AxJedi infrastructure works across codebases. We build it once, deploy it many places. Better margins, faster deployment, real operational leverage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Novaryn -->
+  <section style="background: linear-gradient(180deg, rgba(155,135,96,.02) 0%, var(--bg) 100%);">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow">Our Difference</div>
+        <h2>Why Choose Novaryn</h2>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Proof Over Hype</h3>
+          <p>We don't ship until it works. We test with real customers. We measure operational value. No marketing theater.</p>
+        </div>
+
+        <div class="card">
+          <h3>Technical Seriousness</h3>
+          <p>Built by engineers, for engineers. We understand your constraints: performance, reliability, security, and the operational friction that generic AI can't solve.</p>
+        </div>
+
+        <div class="card">
+          <h3>Danish Pragmatism</h3>
+          <p>No-nonsense. Flat hierarchy. Direct communication. Respect for your time. We say what we mean and do what we say.</p>
+        </div>
+
+        <div class="card">
+          <h3>Grounded in Real Work</h3>
+          <p>We're not theoretical. We've worked in enterprise environments. We know what breaks. We know what matters. We build for that.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="contact" style="background: linear-gradient(180deg, rgba(155,135,96,.06) 0%, var(--bg) 100%);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Ready to Get Started?</h2>
+      </div>
+
+      <div class="cta-grid">
+        <div class="cta-card">
+          <h3>Schedule a Demo</h3>
+          <p>See AxJedi in action. We'll walk through a real use case with your own codebase.</p>
+          <button class="button">Book a Time</button>
+        </div>
+
+        <div class="cta-card">
+          <h3>Join the Beta</h3>
+          <p>Early access to Novaryn systems. Help us shape the product. Get priority support.</p>
+          <button class="button">Apply Now</button>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px; padding: 24px; border: 1px solid var(--border); border-radius: 15px; background: var(--overlay);">
+        <p class="subtext">Questions? <a href="mailto:hello@novaryn.io">hello@novaryn.io</a> or join our Discord community.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-section">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#axjedi">AxJedi</a></li>
+          <li><a href="#">Enterprise</a></li>
+          <li><a href="#">Custom Deployments</a></li>
+          <li><a href="#">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Status Page</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="footer-bottom">
+        <div>© 2026 Novaryn. All rights reserved.</div>
+        <div><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Security</a></div>
+        <div style="flex: 1; text-align: right;">Novaryn · Premium AI systems for real operational work</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
