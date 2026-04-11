@@ -60,7 +60,10 @@ All pages: static HTML + shared CSS (`axjedi/assets/style.css`), no framework, d
 5. **"Frontier AI, Purpose-Built"**  
    Powered by Anthropic's Claude Sonnet 4 (fast track) and Claude Opus 4.6 (deep analysis). Auto-escalation: if the fast model can't verify the answer, it automatically escalates to the most powerful model available.
 
-6. **"AxJedi vs. ChatGPT"** (comparison mini-section)  
+6. **"Made By Developers, For Developers"**
+   Hundreds of hours of development went into AxJedi's verification pipeline, codebase intelligence, and agentic orchestration. This isn't a ChatGPT wrapper — it's a purpose-built system that utilizes frontier AI models at the absolute forefront of current agentic AI technology.
+
+7. **"AxJedi vs. ChatGPT"** (comparison mini-section)  
    | | AxJedi | ChatGPT / Copilot |
    |---|---|---|
    | Knows your codebase | ✅ Every class, table, method | ❌ Generic X++ |
