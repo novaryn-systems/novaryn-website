@@ -333,6 +333,29 @@
       font-size: 0.95rem;
     }
 
+    .screenshot-frame {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      padding: 0.8rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      max-width: 100%;
+      display: block;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .screenshot-caption {
+      margin-top: 0.7rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
     .cta {
       padding: 4rem 0;
       border-top: 1px solid var(--line);
@@ -478,7 +501,7 @@
         <a class="nav-link" href="/axjedi/">Home</a>
         <a class="nav-link active" href="/axjedi/features/" aria-current="page">Features</a>
         <a class="nav-link" href="/axjedi/cases/">Case Studies</a>
-        <a class="nav-link" href="mailto:axjedi@novaryn.io?subject=AxJedi%20Beta%20Application">Apply for Beta</a>
+        <a class="nav-link" href="/axjedi/apply/">Apply for Beta</a>
       </nav>
     </div>
   </header>
@@ -488,6 +511,15 @@
       <p class="eyebrow">Feature Deep Dive</p>
       <h1>What You Get With Every AxJedi Response</h1>
       <p class="hero-subhead">Five expert sections, fully verified code, and one-click deployment — every single time.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="screenshot-frame">
+        <img src="../assets/screenshots/question-filled-web.jpg" alt="The AxJedi query interface with pasted code and a developer question" loading="lazy" />
+        <p class="screenshot-caption">The AxJedi query interface — paste your code, ask your question</p>
+      </div>
     </div>
   </section>
 
@@ -574,6 +606,10 @@
           <article class="card">
             <h3 class="card-title"><span class="icon" aria-hidden="true">📦</span>XPO Export</h3>
             <p>One-click export to properly formatted XPO. Auto-detection of target class/form. Diff view showing exactly what changed. Version history for all exports. Import instructions included.</p>
+            <div class="screenshot-frame" style="margin-top: 0.9rem;">
+              <img src="../assets/screenshots/code-diff-web.jpg" alt="Code changes highlighted in AxJedi diff view" loading="lazy" />
+              <p class="screenshot-caption">Code changes highlighted: green for additions, red for removals</p>
+            </div>
           </article>
 
           <article class="card">
@@ -632,7 +668,7 @@
         <h2>Start Your Free Beta Trial</h2>
         <p>Apply now to test AxJedi on your AX 2009 codebase and evaluate verified X++ generation in your own environment.</p>
         <div class="cta-actions">
-          <a class="btn btn-primary" href="mailto:axjedi@novaryn.io?subject=AxJedi%20Beta%20Application">Apply for Beta Access</a>
+          <a class="btn btn-primary" href="/axjedi/apply/">Apply for Beta Access</a>
           <a class="btn btn-secondary" href="/axjedi/cases/">See Real Examples -></a>
         </div>
       </div>
@@ -650,7 +686,7 @@
           <a href="/axjedi/">Home</a>
           <a href="/axjedi/features/" aria-current="page">Features</a>
           <a href="/axjedi/cases/">Case Studies</a>
-          <a href="mailto:axjedi@novaryn.io?subject=AxJedi%20Beta%20Application">Apply for Beta</a>
+          <a href="/axjedi/apply/">Apply for Beta</a>
         </nav>
       </div>
       <p class="footer-note">Commercial AI for AX 2009 code generation with verification-first architecture.</p>

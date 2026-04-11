@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apply for Beta Access | AxJedi</title>
+  <meta name="description" content="Apply for AxJedi beta access and get running on your AX codebase in 24 hours." />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --highlight: #4a9eff;
+      --text: #eef1f6;
+      --muted: #a2aab8;
+      --success: #2ecc71;
+      --danger: #e74c3c;
+      --panel: linear-gradient(135deg, #1a1f2e 0%, #0f1115 100%);
+      --line: rgba(255, 255, 255, 0.08);
+      --soft: rgba(74, 158, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      background:
+        radial-gradient(circle at 12% 0%, rgba(74, 158, 255, 0.16) 0%, transparent 30%),
+        radial-gradient(circle at 88% 7%, rgba(46, 204, 113, 0.08) 0%, transparent 24%),
+        var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, 100% - 2.5rem);
+      margin: 0 auto;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 17, 21, 0.86);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .brand {
+      font-size: 1.45rem;
+      font-weight: 850;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #4a9eff 0%, #cfd6e4 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .byline {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-link {
+      padding: 0.52rem 0.85rem;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-link:hover {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      border-color: rgba(74, 158, 255, 0.45);
+      background: rgba(74, 158, 255, 0.12);
+    }
+
+    .hero {
+      padding: 4.75rem 0 3rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      color: var(--highlight);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.74rem;
+      font-weight: 760;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4.3vw, 3.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      max-width: 24ch;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subhead {
+      color: var(--muted);
+      font-size: clamp(1.02rem, 2.15vw, 1.2rem);
+      max-width: 66ch;
+    }
+
+    main section {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 70ch;
+      margin-bottom: 1.2rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .step {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: #d9e8ff;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .security-callout {
+      margin-top: 1rem;
+      border: 1px solid rgba(74, 158, 255, 0.35);
+      background: rgba(74, 158, 255, 0.08);
+      border-radius: 12px;
+      padding: 0.95rem 1rem;
+      color: #dbe8ff;
+      font-size: 0.95rem;
+    }
+
+    .form-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.15rem;
+    }
+
+    .panel h3 {
+      font-size: 1.06rem;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.01em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .field-full {
+      grid-column: 1 / -1;
+    }
+
+    label,
+    .group-label {
+      font-size: 0.9rem;
+      font-weight: 620;
+      color: #e2e8f4;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text);
+      padding: 0.62rem 0.7rem;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: rgba(74, 158, 255, 0.65);
+      box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.18);
+    }
+
+    .helper {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .check-group {
+      display: grid;
+      gap: 0.45rem;
+      margin-top: 0.25rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .check-item input {
+      width: auto;
+      margin-top: 0.22rem;
+      accent-color: var(--highlight);
+    }
+
+    .field-error {
+      min-height: 1rem;
+      font-size: 0.8rem;
+      color: var(--danger);
+    }
+
+    .invalid {
+      border-color: rgba(231, 76, 60, 0.65) !important;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.16) !important;
+    }
+
+    .hidden-honeypot {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .submit-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-top: 1.2rem;
+    }
+
+    .submit-btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 0.82rem 1.1rem;
+      font-size: 1rem;
+      font-weight: 760;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4a9eff 0%, #2d7dd6 100%);
+      color: #fff;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .submit-note {
+      color: var(--muted);
+      font-size: 0.87rem;
+    }
+
+    .mail-fallback-note {
+      color: #d4def0;
+      font-size: 0.88rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.7rem 0.8rem;
+    }
+
+    .success-panel {
+      display: none;
+      border: 1px solid rgba(46, 204, 113, 0.4);
+      background: rgba(46, 204, 113, 0.08);
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .success-panel.visible {
+      display: block;
+    }
+
+    .success-panel h3 {
+      color: #b8f7d2;
+      margin-bottom: 0.45rem;
+    }
+
+    .success-panel p {
+      color: #d6f4e3;
+      margin-bottom: 0.5rem;
+    }
+
+    .success-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: #d9e8ff;
+      border: 1px solid rgba(74, 158, 255, 0.35);
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      font-size: 0.9rem;
+      background: rgba(74, 158, 255, 0.12);
+    }
+
+    footer {
+      padding: 1.9rem 0 2.3rem;
+      background: #0a0c11;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 0.84rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 960px) {
+      .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(1120px, 100% - 1.2rem);
+      }
+
+      .nav-inner {
+        align-items: flex-start;
+        padding: 0.8rem 0;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding-top: 3.3rem;
+      }
+
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .steps {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-nav" aria-label="Main">
+    <div class="container nav-inner">
+      <div class="brand-wrap">
+        <a class="brand" href="/axjedi/">AxJedi</a>
+        <span class="byline">by Novaryn</span>
+      </div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a class="nav-link" href="/axjedi/">Home</a>
+        <a class="nav-link" href="/axjedi/features/">Features</a>
+        <a class="nav-link" href="/axjedi/cases/">Case Studies</a>
+        <a class="nav-link active" href="/axjedi/apply/" aria-current="page">Apply for Beta</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Beta Program</p>
+      <h1>Apply for Beta Access</h1>
+      <p class="hero-subhead">Get AxJedi running on your codebase in 24 hours. 14 days free, 10 queries per day.</p>
+    </div>
+  </section>
+
+  <main>
+    <section>
+      <div class="container">
+        <h2>How It Works</h2>
+        <p class="section-intro">A quick, secure onboarding flow to connect AxJedi to your AX environment.</p>
+        <div class="steps" aria-label="AxJedi onboarding steps">
+          <article class="step">
+            <strong>1. 📝 Fill out the form below</strong>
+            <p>Tell us who you are and how you use Axapta/AX.</p>
+          </article>
+          <article class="step">
+            <strong>2. 📦 Receive XPO extraction code</strong>
+            <p>We send a simple AX job to export the needed metadata.</p>
+          </article>
+          <article class="step">
+            <strong>3. ☁️ Send us your XPO file</strong>
+            <p>We provide secure upload instructions for transfer.</p>
+          </article>
+          <article class="step">
+            <strong>4. 🔑 Get your login credentials</strong>
+            <p>Most applicants are activated within 24 hours.</p>
+          </article>
+        </div>
+        <p class="security-callout">Your codebase data is protected by TLS 1.3 encryption, IP allowlisting, and per-user authentication. We require your access IP address as a security measure - only whitelisted IPs can access your AxJedi instance. This also ensures your proprietary code stays safe.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container form-shell">
+        <h2>Beta Application Form</h2>
+        <p class="section-intro">Complete the required fields below. We will review and reply within 24 hours.</p>
+
+        <form id="beta-form" class="panel" novalidate>
+          <div class="hidden-honeypot" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" autocomplete="off" tabindex="-1" />
+          </div>
+
+          <div class="panel" style="background: rgba(255,255,255,0.01);">
+            <h3>Personal Information</h3>
+            <div class="field-grid">
+              <div class="field">
+                <label for="firstName">First Name (required)</label>
+                <input id="firstName" name="firstName" type="text" required />
+                <p class="field-error" id="error-firstName"></p>
+              </div>
+
+              <div class="field">
+                <label for="lastName">Last Name (required)</label>
+                <input id="lastName" name="lastName" type="text" required />
+                <p class="field-error" id="error-lastName"></p>
+              </div>
+
+              <div class="field">
+                <label for="email">Email Address (required)</label>
+                <input id="email" name="email" type="email" required />
+                <p class="field-error" id="error-email"></p>
+              </div>
+
+              <div class="field">
+                <label for="company">Company Name (optional)</label>
+                <input id="company" name="company" type="text" />
+                <p class="field-error" id="error-company"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="background: rgba(255,255,255,0.01); margin-top: 1rem;">
+            <h3>AX Background</h3>
+            <div class="field-grid">
+              <div class="field field-full">
+                <label for="role">Your role / relationship with Axapta (required)</label>
+                <select id="role" name="role" required>
+                  <option value="">Select your role</option>
+                  <option value="AX 2009 Developer">AX 2009 Developer</option>
+                  <option value="AX 2012 Developer">AX 2012 Developer</option>
+                  <option value="IT Manager / Director">IT Manager / Director</option>
+                  <option value="Consultant / Partner">Consultant / Partner</option>
+                  <option value="Other">Other</option>
+                </select>
+                <p class="field-error" id="error-role"></p>
+              </div>
+
+              <fieldset class="field field-full" id="versions-group" style="border: 0; padding: 0;">
+                <legend class="group-label">Which AX versions are you interested in? (required)</legend>
+                <div class="check-group">
+                  <label class="check-item"><input type="checkbox" name="versions" value="AX 2009 (Axapta)" /> AX 2009 (Axapta)</label>
+                  <label class="check-item"><input type="checkbox" name="versions" value="AX 2012 (coming soon)" /> AX 2012 (coming soon)</label>
+                </div>
+                <p class="field-error" id="error-versions"></p>
+              </fieldset>
+
+              <div class="field field-full">
+                <label for="ipAddresses">IP Address(es) for access (required)</label>
+                <input id="ipAddresses" name="ipAddresses" type="text" required />
+                <p class="helper">Your public IP address. You can find it at whatismyip.com. Multiple IPs: separate with commas.</p>
+                <p class="field-error" id="error-ipAddresses"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="background: rgba(255,255,255,0.01); margin-top: 1rem;">
+            <h3>Interest</h3>
+            <div class="field-grid">
+              <fieldset class="field field-full" style="border: 0; padding: 0;">
+                <legend class="group-label">Which features sound most interesting? (optional)</legend>
+                <div class="check-group">
+                  <label class="check-item"><input type="checkbox" name="features" value="Verified code generation (zero hallucinations)" /> Verified code generation (zero hallucinations)</label>
+                  <label class="check-item"><input type="checkbox" name="features" value="Codebase-aware suggestions" /> Codebase-aware suggestions</label>
+                  <label class="check-item"><input type="checkbox" name="features" value="One-click XPO export" /> One-click XPO export</label>
+                  <label class="check-item"><input type="checkbox" name="features" value="Code verification & diff view" /> Code verification & diff view</label>
+                  <label class="check-item"><input type="checkbox" name="features" value="Codebase visualizer" /> Codebase visualizer</label>
+                  <label class="check-item"><input type="checkbox" name="features" value="Session management & history" /> Session management & history</label>
+                </div>
+              </fieldset>
+
+              <div class="field field-full">
+                <label for="notes">Anything else you'd like us to know? (optional)</label>
+                <textarea id="notes" name="notes"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="background: rgba(255,255,255,0.01); margin-top: 1rem;">
+            <h3>Anti-spam</h3>
+            <div class="field">
+              <label for="mathChallenge">What is 7 + 3? (required)</label>
+              <input id="mathChallenge" name="mathChallenge" type="text" inputmode="numeric" required />
+              <p class="field-error" id="error-mathChallenge"></p>
+            </div>
+          </div>
+
+          <div class="submit-wrap">
+            <button class="submit-btn" type="submit">Submit Application</button>
+            <p class="submit-note">Submitting opens your email client with your application details pre-filled.</p>
+            <p class="mail-fallback-note">If your email client didn't open, you can email us directly at <a href="mailto:axjedi@novaryn.io" style="color:#b8d8ff; text-decoration: underline;">axjedi@novaryn.io</a> with your application details.</p>
+          </div>
+        </form>
+
+        <section class="success-panel" id="success-panel" aria-live="polite">
+          <h3>✅ Application Submitted!</h3>
+          <p>Thank you for your interest in AxJedi. We'll review your application and get back to you within 24 hours.</p>
+          <p>In the meantime, check out our case studies to see AxJedi in action.</p>
+          <a class="success-link" href="/axjedi/cases/">View Case Studies →</a>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <p>© 2026 Novaryn ApS</p>
+        <div class="footer-links">
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+          <a href="mailto:axjedi@novaryn.io">Contact</a>
+        </div>
+      </div>
+      <p class="footer-note">Powered by frontier AI models from Anthropic</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var form = document.getElementById('beta-form');
+      var successPanel = document.getElementById('success-panel');
+      var requiredFieldIds = ['firstName', 'lastName', 'email', 'role', 'ipAddresses', 'mathChallenge'];
+
+      function trimValue(id) {
+        var el = document.getElementById(id);
+        return el ? el.value.trim() : '';
+      }
+
+      function setError(id, message) {
+        var input = document.getElementById(id);
+        var error = document.getElementById('error-' + id);
+        if (input) {
+          if (message) {
+            input.classList.add('invalid');
+          } else {
+            input.classList.remove('invalid');
+          }
+        }
+        if (error) {
+          error.textContent = message || '';
+        }
+      }
+
+      function setGroupError(groupId, errorId, message) {
+        var group = document.getElementById(groupId);
+        var error = document.getElementById(errorId);
+        if (group) {
+          if (message) {
+            group.classList.add('invalid');
+          } else {
+            group.classList.remove('invalid');
+          }
+        }
+        if (error) {
+          error.textContent = message || '';
+        }
+      }
+
+      function validateForm() {
+        var ok = true;
+
+        requiredFieldIds.forEach(function (id) {
+          setError(id, '');
+        });
+        setGroupError('versions-group', 'error-versions', '');
+
+        if (!trimValue('firstName')) {
+          setError('firstName', 'First name is required.');
+          ok = false;
+        }
+
+        if (!trimValue('lastName')) {
+          setError('lastName', 'Last name is required.');
+          ok = false;
+        }
+
+        var email = trimValue('email');
+        if (!email) {
+          setError('email', 'Email is required.');
+          ok = false;
+        } else {
+          var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            setError('email', 'Enter a valid email address.');
+            ok = false;
+          }
+        }
+
+        if (!trimValue('role')) {
+          setError('role', 'Please choose a role.');
+          ok = false;
+        }
+
+        var versions = Array.prototype.slice.call(form.querySelectorAll('input[name="versions"]:checked'));
+        if (!versions.length) {
+          setGroupError('versions-group', 'error-versions', 'Select at least one AX version.');
+          ok = false;
+        }
+
+        if (!trimValue('ipAddresses')) {
+          setError('ipAddresses', 'IP address is required.');
+          ok = false;
+        }
+
+        var math = trimValue('mathChallenge');
+        if (!math) {
+          setError('mathChallenge', 'Math answer is required.');
+          ok = false;
+        } else if (math !== '10') {
+          setError('mathChallenge', 'Incorrect answer. Please enter 10.');
+          ok = false;
+        }
+
+        return ok;
+      }
+
+      function selectedValues(name) {
+        return Array.prototype.slice
+          .call(form.querySelectorAll('input[name="' + name + '"]:checked'))
+          .map(function (el) { return el.value; });
+      }
+
+      function buildMailtoBody() {
+        var lines = [];
+        lines.push('AxJedi Beta Application');
+        lines.push('=======================');
+        lines.push('');
+        lines.push('Personal Information');
+        lines.push('- First Name: ' + trimValue('firstName'));
+        lines.push('- Last Name: ' + trimValue('lastName'));
+        lines.push('- Email Address: ' + trimValue('email'));
+        lines.push('- Company Name: ' + (trimValue('company') || 'N/A'));
+        lines.push('');
+        lines.push('AX Background');
+        lines.push('- Role / Relationship: ' + trimValue('role'));
+        lines.push('- AX Versions: ' + selectedValues('versions').join(', '));
+        lines.push('- IP Address(es): ' + trimValue('ipAddresses'));
+        lines.push('');
+        lines.push('Interest');
+        lines.push('- Interesting Features: ' + (selectedValues('features').join(', ') || 'N/A'));
+        lines.push('- Additional Notes: ' + (trimValue('notes') || 'N/A'));
+        lines.push('');
+        lines.push('Submitted from: ' + window.location.href);
+        lines.push('Timestamp: ' + new Date().toISOString());
+        return lines.join('\n');
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var honeypot = trimValue('website');
+        if (honeypot) {
+          return;
+        }
+
+        if (!validateForm()) {
+          var firstError = form.querySelector('.invalid');
+          if (firstError) {
+            firstError.focus();
+          }
+          return;
+        }
+
+        var subject = encodeURIComponent('AxJedi Beta Application');
+        var body = encodeURIComponent(buildMailtoBody());
+        var mailto = 'mailto:hk@datamatrix.dk?subject=' + subject + '&body=' + body;
+
+        window.location.href = mailto;
+
+        form.style.display = 'none';
+        successPanel.classList.add('visible');
+        successPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      requiredFieldIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el) {
+          return;
+        }
+        el.addEventListener('input', function () {
+          if (el.classList.contains('invalid')) {
+            setError(id, '');
+          }
+        });
+      });
+
+      Array.prototype.slice.call(form.querySelectorAll('input[name="versions"]')).forEach(function (el) {
+        el.addEventListener('change', function () {
+          setGroupError('versions-group', 'error-versions', '');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

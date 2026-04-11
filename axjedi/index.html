@@ -272,6 +272,39 @@
       color: var(--accent);
     }
 
+    .screenshot-gallery {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 0.35rem;
+      scroll-snap-type: x proximity;
+    }
+
+    .screenshot-card {
+      flex: 0 0 min(82vw, 360px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 0.8rem;
+      box-shadow: var(--shadow);
+      scroll-snap-align: start;
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      max-width: 100%;
+      display: block;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: auto;
+    }
+
+    .screenshot-card figcaption {
+      margin-top: 0.7rem;
+      color: var(--accent);
+      font-size: 0.92rem;
+    }
+
     .table-wrap {
       overflow-x: auto;
       border: 1px solid var(--line);
@@ -459,6 +492,15 @@
         grid-template-columns: 1fr;
       }
 
+      .screenshot-gallery {
+        flex-direction: column;
+        overflow-x: visible;
+      }
+
+      .screenshot-card {
+        flex: 1 1 auto;
+      }
+
       section {
         padding: 3.4rem 0;
       }
@@ -558,6 +600,31 @@
       </div>
     </section>
 
+    <section>
+      <div class="wrap">
+        <h3 class="section-title reveal">See AxJedi In Action</h3>
+        <div class="screenshot-gallery reveal">
+          <figure class="screenshot-card">
+            <img src="assets/screenshots/question-filled-web.jpg" alt="AxJedi interface showing a question with full code context" loading="lazy" />
+            <figcaption>Ask your question with full code context</figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="assets/screenshots/answer-full-web.jpg" alt="AxJedi full answer with five expert sections" loading="lazy" />
+            <figcaption>Get a comprehensive, verified response with five expert sections</figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="assets/screenshots/code-diff-web.jpg" alt="AxJedi code diff highlighting additions and removals" loading="lazy" />
+            <figcaption>See exactly what changed — green for additions, red for removals</figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="assets/screenshots/login-web.jpg" alt="AxJedi enterprise login screen" loading="lazy" />
+            <figcaption>Enterprise-grade secure access</figcaption>
+          </figure>
+        </div>
+        <!-- answer-full screenshot currently shows user name for Hans review before launch -->
+      </div>
+    </section>
+
     <section id="comparison">
       <div class="wrap">
         <h3 class="section-title reveal">AxJedi vs. ChatGPT</h3>
@@ -621,7 +688,7 @@
             <li>You get 14 days free - 10 queries per day</li>
           </ol>
           <div class="cta-actions">
-            <a class="btn-primary" href="mailto:axjedi@novaryn.io">Apply for Beta Access</a>
+            <a class="btn-primary" href="/axjedi/apply/">Apply for Beta Access</a>
             <a class="secondary-link" href="/axjedi/cases/">See Real Examples →</a>
           </div>
 
