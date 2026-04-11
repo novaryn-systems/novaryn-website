@@ -248,6 +248,10 @@
       gap: 1rem;
     }
 
+    .cards-grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
     .punch-card {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -266,6 +270,30 @@
       color: var(--highlight);
       font-size: 1.05rem;
       margin-bottom: 0.5rem;
+    }
+
+    .punch-card h3 {
+      color: var(--text);
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+      color: var(--accent);
+      font-size: 0.81rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .card-meta .num {
+      color: var(--highlight);
     }
 
     .punch-card p {
@@ -337,7 +365,8 @@
 
     .lightbox-content {
       max-width: 90vw;
-      max-height: 90vh;
+      max-height: 80vh;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -348,7 +377,7 @@
     .lightbox-content img {
       display: block;
       max-width: 90vw;
-      max-height: calc(90vh - 2.5rem);
+      max-height: 80vh;
       border-radius: 12px;
       object-fit: contain;
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.42);
@@ -684,50 +713,6 @@
       </div>
     </section>
 
-    <section>
-      <div class="wrap">
-        <h3 class="section-title reveal">See AxJedi In Action</h3>
-        <div class="screenshot-gallery reveal">
-          <figure class="screenshot-card">
-            <a class="screenshot-link" href="assets/screenshots/full-question.jpg" data-caption="Ask your question with full code context">
-              <img src="assets/screenshots/thumb-question.jpg" alt="Ask your question with full code context" loading="lazy" />
-              <span class="screenshot-caption">Ask your question with full code context</span>
-            </a>
-          </figure>
-          <figure class="screenshot-card">
-            <a class="screenshot-link" href="assets/screenshots/full-answer.jpg" data-caption="Comprehensive verified response with five expert sections">
-              <img src="assets/screenshots/thumb-answer.jpg" alt="Comprehensive verified response with five expert sections" loading="lazy" />
-              <span class="screenshot-caption">Comprehensive verified response with five expert sections</span>
-            </a>
-          </figure>
-          <figure class="screenshot-card">
-            <a class="screenshot-link" href="assets/screenshots/full-diff.jpg" data-caption="Code changes: green for additions, red for removals">
-              <img src="assets/screenshots/thumb-diff.jpg" alt="Code changes: green for additions, red for removals" loading="lazy" />
-              <span class="screenshot-caption">Code changes: green for additions, red for removals</span>
-            </a>
-          </figure>
-          <figure class="screenshot-card">
-            <a class="screenshot-link" href="assets/screenshots/full-login.jpg" data-caption="Enterprise-grade secure access">
-              <img src="assets/screenshots/thumb-login.jpg" alt="Enterprise-grade secure access" loading="lazy" />
-              <span class="screenshot-caption">Enterprise-grade secure access</span>
-            </a>
-          </figure>
-          <figure class="screenshot-card">
-            <a class="screenshot-link" href="assets/screenshots/full-context.jpg" data-caption="Real-time token usage tracking">
-              <img src="assets/screenshots/thumb-context.jpg" alt="Real-time token usage tracking" loading="lazy" />
-              <span class="screenshot-caption">Real-time token usage tracking</span>
-            </a>
-          </figure>
-          <figure class="screenshot-card">
-            <a class="screenshot-link" href="assets/screenshots/full-graph.jpg" data-caption="Interactive codebase graph explorer">
-              <img src="assets/screenshots/thumb-graph.jpg" alt="Interactive codebase graph explorer" loading="lazy" />
-              <span class="screenshot-caption">Interactive codebase graph explorer</span>
-            </a>
-          </figure>
-        </div>
-      </div>
-    </section>
-
     <section id="comparison">
       <div class="wrap">
         <h3 class="section-title reveal">AxJedi vs. ChatGPT</h3>
@@ -779,6 +764,109 @@
       </div>
     </section>
 
+    <section id="use-cases">
+      <div class="wrap">
+        <p class="kicker reveal">Use Cases</p>
+        <h3 class="section-title reveal">Real-World Use Cases</h3>
+        <div class="cards-grid cols-3">
+          <article class="punch-card reveal">
+            <p class="card-meta"><span class="num">01</span><span>Knowledge</span></p>
+            <h3>Knowledge Transfer</h3>
+            <p>When experienced AX developers retire, decades of institutional knowledge walks out. AxJedi captures that knowledge in the codebase graph and makes it queryable by anyone.</p>
+          </article>
+          <article class="punch-card reveal">
+            <p class="card-meta"><span class="num">02</span><span>Onboarding</span></p>
+            <h3>New Employee Onboarding</h3>
+            <p>New developers ask AxJedi to explain unfamiliar code, understand dependencies, and learn team patterns instead of interrupting senior colleagues for weeks.</p>
+          </article>
+          <article class="punch-card reveal">
+            <p class="card-meta"><span class="num">03</span><span>Productivity</span></p>
+            <h3>Developer Productivity</h3>
+            <p>Stop chasing ChatGPT hallucinations. AxJedi verifies every identifier against your real codebase. Code that compiles, not code that merely looks right.</p>
+          </article>
+          <article class="punch-card reveal">
+            <p class="card-meta"><span class="num">04</span><span>Quality</span></p>
+            <h3>Code Quality</h3>
+            <p>Suggestions follow YOUR teams patterns, not generic examples. AxJedi knows how your codebase handles inventory, customers, production orders.</p>
+          </article>
+          <article class="punch-card reveal">
+            <p class="card-meta"><span class="num">05</span><span>Legacy</span></p>
+            <h3>Legacy Expertise</h3>
+            <p>AX 2009 and 2012 specialists are increasingly rare and expensive. AxJedi preserves and amplifies that expertise, available on demand.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="screenshots">
+      <div class="wrap">
+        <h3 class="section-title reveal">See AxJedi In Action</h3>
+        <div class="screenshot-gallery reveal">
+          <figure class="screenshot-card">
+            <a class="screenshot-link" href="assets/screenshots/full-question.jpg" data-caption="Ask your question naturally with full code context. Paste X++ methods, form code, or describe what you need. AxJedi understands AX 2009 and 2012 syntax and works with your specific codebase objects.">
+              <img src="assets/screenshots/thumb-question.jpg" alt="Ask your question with full code context" loading="lazy" />
+              <span class="screenshot-caption">Ask your question naturally with full code context. Paste X++ methods, form code, or describe what you need. AxJedi understands AX 2009 and 2012 syntax and works with your specific codebase objects.</span>
+            </a>
+          </figure>
+          <figure class="screenshot-card">
+            <a class="screenshot-link" href="assets/screenshots/full-answer.jpg" data-caption="Get comprehensive verified responses organized into approach, working code, detailed explanation, edge cases, and testing guidance. Every identifier is checked against your real codebase with no hallucinations.">
+              <img src="assets/screenshots/thumb-answer.jpg" alt="Comprehensive verified response with five expert sections" loading="lazy" />
+              <span class="screenshot-caption">Get comprehensive verified responses organized into approach, working code, detailed explanation, edge cases, and testing guidance. Every identifier is checked against your real codebase with no hallucinations.</span>
+            </a>
+          </figure>
+          <figure class="screenshot-card">
+            <a class="screenshot-link" href="assets/screenshots/full-diff.jpg" data-caption="See exactly what changed with color-coded diffs. Green for additions, red for removals. Review modifications line by line before applying anything, with full method context so nothing is lost.">
+              <img src="assets/screenshots/thumb-diff.jpg" alt="Code changes: green for additions, red for removals" loading="lazy" />
+              <span class="screenshot-caption">See exactly what changed with color-coded diffs. Green for additions, red for removals. Review modifications line by line before applying anything, with full method context so nothing is lost.</span>
+            </a>
+          </figure>
+          <figure class="screenshot-card">
+            <a class="screenshot-link" href="assets/screenshots/full-login.jpg" data-caption="Secure access with individual user accounts, IP restriction, and rate limiting. Each developer gets their own session history and usage tracking for full accountability.">
+              <img src="assets/screenshots/thumb-login.jpg" alt="Enterprise-grade secure access" loading="lazy" />
+              <span class="screenshot-caption">Secure access with individual user accounts, IP restriction, and rate limiting. Each developer gets their own session history and usage tracking for full accountability.</span>
+            </a>
+          </figure>
+          <figure class="screenshot-card">
+            <a class="screenshot-link" href="assets/screenshots/full-context.jpg" data-caption="The Context Size indicator shows exactly how much of the AI models capacity is being used. Unlike other AI tools, AxJedi is transparent about when queries approach the limits of reliable analysis.">
+              <img src="assets/screenshots/thumb-context.jpg" alt="Real-time token usage tracking" loading="lazy" />
+              <span class="screenshot-caption">The Context Size indicator shows exactly how much of the AI models capacity is being used. Unlike other AI tools, AxJedi is transparent about when queries approach the limits of reliable analysis.</span>
+            </a>
+          </figure>
+          <figure class="screenshot-card">
+            <a class="screenshot-link" href="assets/screenshots/full-graph.jpg" data-caption="Visualize your codebase as an interactive knowledge graph with over 180000 nodes showing classes, tables, forms, and their relationships. Search any entity and explore its full dependency network.">
+              <img src="assets/screenshots/thumb-graph.jpg" alt="Interactive codebase graph explorer" loading="lazy" />
+              <span class="screenshot-caption">Visualize your codebase as an interactive knowledge graph with over 180000 nodes showing classes, tables, forms, and their relationships. Search any entity and explore its full dependency network.</span>
+            </a>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="data-security">
+      <div class="wrap">
+        <p class="kicker reveal">Data Security</p>
+        <h3 class="section-title reveal">Your Code, Your Control</h3>
+        <div class="cards-grid">
+          <article class="punch-card reveal">
+            <h4>Codebase Stays Local</h4>
+            <p>Your XPO file stays on our dedicated infrastructure. Only query-relevant code snippets are sent for AI analysis. The full codebase never leaves our servers.</p>
+          </article>
+          <article class="punch-card reveal">
+            <h4>Enterprise-Grade Privacy</h4>
+            <p>We use Anthropics commercial API which contractually guarantees no model training on your data and only 7-day retention. Fundamentally different from consumer AI products.</p>
+          </article>
+          <article class="punch-card reveal">
+            <h4>Better Than the Alternative</h4>
+            <p>When developers paste code into ChatGPT or Claude.ai, that data can be stored for years and used for training. AxJedi architecture gives you control over what is shared.</p>
+          </article>
+          <article class="punch-card reveal">
+            <h4>Transparent Context</h4>
+            <p>Our Context Size indicator shows exactly how much of the AIs capacity is being used. You always know when queries approach limits of reliable analysis. No other AI tool offers this.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="beta">
       <div class="wrap">
         <div class="cta-box reveal">
@@ -810,13 +898,13 @@
 
   <footer>
     <div class="wrap">
-      <p>© 2026 Novaryn ApS</p>
+      <p>© 2026 Novaryn Systems</p>
       <div class="footer-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
         <a href="mailto:axjedi@novaryn.io">Contact</a>
       </div>
-      <p style="margin-top:0.6rem;font-size:0.78rem;color:#7a8290;">All code generated by AxJedi is provided as-is, without warranty of any kind. Use of generated code is entirely at your own risk. Novaryn ApS accepts no liability for any damages arising from the use of AxJedi or its output.</p>
+      <p style="margin-top:0.6rem;font-size:0.78rem;color:#7a8290;">All code generated by AxJedi is provided as-is, without warranty of any kind. Use of generated code is entirely at your own risk. Novaryn Systems accepts no liability for any damages arising from the use of AxJedi or its output.</p>
       <p>Powered by frontier AI models from Anthropic</p>
     </div>
   </footer>
