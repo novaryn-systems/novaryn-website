@@ -94,14 +94,14 @@ Timestamp: ${new Date().toISOString()}
       return res.status(500).json({ error: 'Email service not configured' });
     }
 
-    const mailResponse = await fetch(`https://api.agentmail.to/v1/inboxes/${encodeURIComponent(inbox)}/messages`, {
+    const mailResponse = await fetch(`https://api.agentmail.to/v0/inboxes/${encodeURIComponent(inbox)}/messages/send`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${agentmailKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        to: [{ email: 'hk@datamatrix.dk' }],
+        to: 'hk@datamatrix.dk',
         subject: `AxJedi Beta Application: ${firstName} ${lastName} (${company})`,
         text: textBody,
         html: htmlBody
