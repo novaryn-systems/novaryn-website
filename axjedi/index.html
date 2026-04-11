@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AxJedi | Grounded AX 2009 AI Code Generation</title>
+  <meta name="description" content="AxJedi generates AX 2009 code grounded in your real codebase with zero hallucinations and one-click XPO export." />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: linear-gradient(135deg, #1a1f2e 0%, #0f1115 100%);
+      --text: #eef1f6;
+      --muted: #a2aab8;
+      --line: rgba(255, 255, 255, 0.08);
+      --accent: #cfd6e4;
+      --highlight: #4a9eff;
+      --success: #2ecc71;
+      --danger: #e74c3c;
+      --warning: #f39c12;
+      --radius: 14px;
+      --shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+      --maxw: 1160px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100%;
+      background:
+        radial-gradient(1200px 540px at 100% -10%, rgba(74, 158, 255, 0.2), transparent 55%),
+        radial-gradient(760px 460px at -8% 32%, rgba(46, 204, 113, 0.08), transparent 58%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: var(--highlight);
+      text-decoration: none;
+    }
+
+    .wrap {
+      width: min(var(--maxw), 92vw);
+      margin: 0 auto;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 17, 21, 0.84);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .site-nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 0;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.06rem;
+    }
+
+    .brand-logo {
+      font-size: 1.55rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #4a9eff 0%, #eef1f6 92%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand-by {
+      color: var(--muted);
+      font-size: 0.73rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 0.35rem 0.55rem;
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      list-style: none;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--accent);
+      transition: color 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--highlight);
+    }
+
+    section {
+      padding: 4.2rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero {
+      padding-top: 4.8rem;
+    }
+
+    .kicker {
+      color: var(--highlight);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+    }
+
+    h1 {
+      font-size: clamp(2.05rem, 5.4vw, 4rem);
+      line-height: 1.07;
+      letter-spacing: -0.03em;
+      max-width: 18ch;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: clamp(1rem, 1.7vw, 1.22rem);
+      max-width: 70ch;
+      margin-bottom: 2rem;
+    }
+
+    .beat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1rem 0 1.6rem;
+    }
+
+    .beat {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .beat h2 {
+      font-size: 1.02rem;
+      letter-spacing: 0.01em;
+    }
+
+    .beat p {
+      color: var(--accent);
+      font-size: 0.99rem;
+    }
+
+    .beat.promise {
+      background: linear-gradient(140deg, rgba(243, 156, 18, 0.16) 0%, rgba(15, 17, 21, 0.86) 65%);
+      border-color: rgba(243, 156, 18, 0.35);
+    }
+
+    .beat.promise h2 {
+      color: #ffd187;
+    }
+
+    .beat.reality {
+      background: linear-gradient(140deg, rgba(231, 76, 60, 0.19) 0%, rgba(15, 17, 21, 0.92) 65%);
+      border-color: rgba(231, 76, 60, 0.42);
+    }
+
+    .beat.reality h2 {
+      color: #ffb2ac;
+    }
+
+    .beat.axjedi {
+      background: linear-gradient(140deg, rgba(74, 158, 255, 0.29) 0%, rgba(15, 17, 21, 0.86) 68%);
+      border-color: rgba(74, 158, 255, 0.52);
+      box-shadow: 0 0 0 1px rgba(74, 158, 255, 0.2), 0 16px 42px rgba(74, 158, 255, 0.24);
+    }
+
+    .beat.axjedi h2 {
+      color: #b8d8ff;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.65rem;
+      margin-top: 1.4rem;
+    }
+
+    .fact-pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.62rem 0.9rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    h3.section-title {
+      font-size: clamp(1.4rem, 3vw, 2.15rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      max-width: 70ch;
+      margin-bottom: 2rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .punch-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.3rem;
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .punch-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(74, 158, 255, 0.45);
+      box-shadow: 0 14px 32px rgba(74, 158, 255, 0.15);
+    }
+
+    .punch-card h4 {
+      color: var(--highlight);
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .punch-card p {
+      color: var(--accent);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    thead th {
+      text-align: left;
+      font-size: 0.88rem;
+      color: var(--highlight);
+      letter-spacing: 0.02em;
+      background: rgba(74, 158, 255, 0.14);
+      padding: 0.92rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody td {
+      padding: 0.95rem;
+      border-top: 1px solid var(--line);
+      color: var(--accent);
+    }
+
+    tbody td:nth-child(2),
+    thead th:nth-child(2) {
+      background: rgba(74, 158, 255, 0.06);
+    }
+
+    .good {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .bad {
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    .cta-box {
+      background: linear-gradient(132deg, rgba(74, 158, 255, 0.17) 0%, rgba(15, 17, 21, 0.92) 52%);
+      border: 1px solid rgba(74, 158, 255, 0.4);
+      border-radius: var(--radius);
+      padding: clamp(1.2rem, 3vw, 2rem);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box ol {
+      margin: 1rem 0 1.2rem 1.2rem;
+      color: var(--accent);
+    }
+
+    .cta-box li {
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, #4a9eff 0%, #78b8ff 100%);
+      color: #081120;
+      padding: 0.9rem 1.3rem;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.99rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 10px 24px rgba(74, 158, 255, 0.28);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(74, 158, 255, 0.42);
+    }
+
+    .secondary-link {
+      color: #b8d8ff;
+      font-weight: 600;
+    }
+
+    .ax2012 {
+      margin-top: 1.4rem;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .ax2012 a {
+      font-weight: 600;
+    }
+
+    footer {
+      padding: 2rem 0 2.6rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 0.45rem 0;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 500ms ease, transform 500ms ease;
+      will-change: transform, opacity;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .facts {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 860px) {
+      .beat-grid,
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 740px) {
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        right: 4vw;
+        top: calc(100% - 1px);
+        width: min(280px, 92vw);
+        background: rgba(15, 17, 21, 0.97);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.7rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.2rem;
+        display: none;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 0.56rem 0.6rem;
+        border-radius: 8px;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .facts {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 3.4rem 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal,
+      .reveal.in,
+      .punch-card,
+      .btn-primary {
+        transition: none;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="wrap">
+      <div class="brand">
+        <a class="brand-logo" href="#top" aria-label="AxJedi home">AxJedi</a>
+        <span class="brand-by">by Novaryn</span>
+      </div>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">☰</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="/axjedi/cases/">Case Studies</a></li>
+        <li><a href="#beta">Apply for Beta</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <p class="kicker reveal">AX 2009 AI Code Generation</p>
+        <h1 class="reveal">AI Code For Axapta That Compiles In Your Real System</h1>
+        <p class="hero-sub reveal">AxJedi generates X++ grounded in your own AX 2009 codebase so teams ship faster without hallucinated identifiers, broken assumptions, or cross-version drift.</p>
+
+        <div class="beat-grid">
+          <article class="beat promise reveal">
+            <h2>The Promise</h2>
+            <p><em>"Just ask ChatGPT to solve your Axapta programming challenge - perfect, plug-and-play code within minutes."</em></p>
+          </article>
+          <article class="beat reality reveal">
+            <h2>The Reality</h2>
+            <p><em>"Generalized code with a high percentage of functions that are either outright hallucinated or not available in your specific version of Axapta - and completely unaware of your actual codebase."</em></p>
+          </article>
+          <article class="beat axjedi reveal">
+            <h2>AxJedi</h2>
+            <p><em>"Code grounded in YOUR codebase, verified against 500,000+ identifiers, version-locked to AX 2009. Code that compiles - not code that looks right."</em></p>
+          </article>
+        </div>
+
+        <div class="facts reveal" aria-label="AxJedi highlights">
+          <div class="fact-pill">✅ Zero Hallucinations</div>
+          <div class="fact-pill">🔍 Your Codebase, Your Rules</div>
+          <div class="fact-pill">🤖 Frontier AI (Sonnet + Opus)</div>
+          <div class="fact-pill">📦 One-Click XPO Export</div>
+          <div class="fact-pill">🔒 Enterprise Security</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <h3 class="section-title reveal">Why AX Teams Choose AxJedi</h3>
+        <p class="section-lead reveal">This system is built for AX 2009 implementation reality: strict schema fit, reliable identifiers, and deployable output in minutes.</p>
+
+        <div class="cards-grid">
+          <article class="punch-card reveal">
+            <h4>It Knows Your Code</h4>
+            <p>AxJedi digests your entire XPO codebase - every class, table, method, enum, form, and relationship. When it suggests code, it references YOUR actual entities, not Stack Overflow examples from a different AX version.</p>
+          </article>
+          <article class="punch-card reveal">
+            <h4>Zero Hallucinations - Or Your Query Is Free</h4>
+            <p>Every identifier in every code suggestion is verified against your actual codebase database (500,000+ verified identifiers). If we hallucinate, the query doesn't count.</p>
+          </article>
+          <article class="punch-card reveal">
+            <h4>Five Expert Sections Per Answer</h4>
+            <p>Every response includes: Approach (strategy), Code (verified X++), Codebase Fit (YOUR system), Explanation (method breakdown), and Learning Point (patterns and best practices).</p>
+          </article>
+          <article class="punch-card reveal">
+            <h4>Export to XPO, Deploy in Minutes</h4>
+            <p>One click generates a properly formatted XPO file ready for direct import into AX. See exact changes with diff view. Keep version history.</p>
+          </article>
+          <article class="punch-card reveal">
+            <h4>Frontier AI, Purpose-Built</h4>
+            <p>Powered by Anthropic's Claude Sonnet 4 and Opus 4.6. Auto-escalation: if fast can't verify, it automatically escalates to deep analysis. This isn't a ChatGPT wrapper.</p>
+          </article>
+          <article class="punch-card reveal">
+            <h4>Made By Developers, For Developers</h4>
+            <p>Hundreds of hours of development went into AxJedi's verification pipeline, codebase intelligence, and agentic orchestration. This system utilizes frontier AI at the absolute forefront of current agentic technology.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="comparison">
+      <div class="wrap">
+        <h3 class="section-title reveal">AxJedi vs. ChatGPT</h3>
+        <p class="section-lead reveal">The difference is grounded context, verified identifiers, and deployment-ready AX output.</p>
+
+        <div class="table-wrap reveal">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>AxJedi</th>
+                <th>ChatGPT / Copilot</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Knows your codebase</td>
+                <td class="good">✅ Every class, table, method</td>
+                <td class="bad">❌ Generic X++</td>
+              </tr>
+              <tr>
+                <td>Verified identifiers</td>
+                <td class="good">✅ 500,000+ checked</td>
+                <td class="bad">❌ Hallucinated names</td>
+              </tr>
+              <tr>
+                <td>AX version-aware</td>
+                <td class="good">✅ Version-locked</td>
+                <td class="bad">❌ Mixes 2009/2012/D365</td>
+              </tr>
+              <tr>
+                <td>XPO export</td>
+                <td class="good">✅ One-click</td>
+                <td class="bad">❌ Copy-paste</td>
+              </tr>
+              <tr>
+                <td>Codebase relationships</td>
+                <td class="good">✅ 180K+ node graph</td>
+                <td class="bad">❌ No context</td>
+              </tr>
+              <tr>
+                <td>Self-correcting</td>
+                <td class="good">✅ Auto-escalation</td>
+                <td class="bad">❌ Single shot</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="beta">
+      <div class="wrap">
+        <div class="cta-box reveal">
+          <h3 class="section-title">Start Your Free Beta Trial</h3>
+          <p class="section-lead">Getting started takes about 24 hours:</p>
+          <ol>
+            <li>We provide the XPO extraction code (simple AX job)</li>
+            <li>You upload your XPO to our secure portal</li>
+            <li>We ingest your codebase (typically overnight)</li>
+            <li>You get 14 days free - 10 queries per day</li>
+          </ol>
+          <div class="cta-actions">
+            <a class="btn-primary" href="mailto:axjedi@novaryn.io">Apply for Beta Access</a>
+            <a class="secondary-link" href="/axjedi/cases/">See Real Examples →</a>
+          </div>
+
+          <p class="ax2012">AX 2012 support is in development. We're accepting PoC applications. <a href="mailto:axjedi@novaryn.io">Contact us →</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>© 2026 Novaryn ApS</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="mailto:axjedi@novaryn.io">Contact</a>
+      </div>
+      <p>Powered by frontier AI models from Anthropic</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var toggle = document.querySelector('.nav-toggle');
+      var menu = document.getElementById('nav-links');
+      var menuLinks = menu ? menu.querySelectorAll('a') : [];
+
+      if (toggle && menu) {
+        toggle.addEventListener('click', function () {
+          var open = menu.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', String(open));
+        });
+
+        menuLinks.forEach(function (link) {
+          link.addEventListener('click', function () {
+            menu.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(function (el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+</body>
+</html>
