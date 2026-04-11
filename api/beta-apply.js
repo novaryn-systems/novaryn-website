@@ -103,8 +103,7 @@ Timestamp: ${new Date().toISOString()}
       body: JSON.stringify({
         to: 'hk@datamatrix.dk',
         subject: `AxJedi Beta Application: ${firstName} ${lastName} (${company})`,
-        text: textBody,
-        html: htmlBody
+        text: textBody
       })
     });
 
