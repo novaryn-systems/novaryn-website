@@ -608,8 +608,7 @@
 
           <div class="submit-wrap">
             <button class="submit-btn" type="submit">Submit Application</button>
-            <p class="submit-note">Submitting opens your email client with your application details pre-filled.</p>
-            <p class="mail-fallback-note">If your email client didn't open, you can email us directly at <a href="mailto:axjedi@novaryn.io" style="color:#b8d8ff; text-decoration: underline;">axjedi@novaryn.io</a> with your application details.</p>
+            <p class="submit-note">Your application will be sent securely to our team.</p>
           </div>
         </form>
 
@@ -783,15 +782,43 @@
           return;
         }
 
-        var subject = encodeURIComponent('AxJedi Beta Application');
-        var body = encodeURIComponent(buildMailtoBody());
-        var mailto = 'mailto:hk@datamatrix.dk?subject=' + subject + '&body=' + body;
+        var submitBtn = form.querySelector('.submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
 
-        window.location.href = mailto;
+        var payload = {
+          firstName: trimValue('first-name'),
+          lastName: trimValue('last-name'),
+          email: trimValue('email'),
+          company: trimValue('company'),
+          role: trimValue('role'),
+          axVersions: selectedValues('versions'),
+          ipAddresses: trimValue('ip-addresses'),
+          features: selectedValues('features'),
+          notes: trimValue('notes'),
+          website: trimValue('website')
+        };
 
-        form.style.display = 'none';
-        successPanel.classList.add('visible');
-        successPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        fetch('/api/beta-apply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(function(resp) { return resp.json(); })
+        .then(function(data) {
+          if (data.ok) {
+            form.style.display = 'none';
+            successPanel.classList.add('visible');
+            successPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            throw new Error(data.error || 'Submission failed');
+          }
+        })
+        .catch(function(err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Application';
+          alert('Something went wrong: ' + err.message + '\n\nPlease email your application to axjedi@novaryn.io instead.');
+        });
       });
 
       requiredFieldIds.forEach(function (id) {
