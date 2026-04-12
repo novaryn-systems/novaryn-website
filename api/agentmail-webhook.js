@@ -41,11 +41,11 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: false, error: 'No API key' });
     }
 
-    // Don't forward emails that are already FROM hk@datamatrix.dk (avoid loops)
-    const fromStr = typeof from === 'string' ? from : JSON.stringify(from);
-    if (fromStr.includes('hk@datamatrix.dk')) {
-      console.log(`[WEBHOOK] Skipping forward — email is from hk@datamatrix.dk`);
-      return res.status(200).json({ ok: true, skipped: true, reason: 'sender-loop' });
+    // Loop prevention: skip messages that are our own forwards
+    // (they have the [recipient@novaryn.io] prefix in subject)
+    if (subject.match(/^\[.*@novaryn\.io\]/)) {
+      console.log(`[WEBHOOK] Skipping — looks like our own forward: "${subject}"`);
+      return res.status(200).json({ ok: true, skipped: true, reason: 'own-forward' });
     }
 
     // Don't forward if the email was already sent TO hk@datamatrix.dk (e.g., our own beta form emails)
