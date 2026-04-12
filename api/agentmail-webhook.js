@@ -55,6 +55,9 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, skipped: true, reason: 'already-addressed' });
     }
 
+    // Build from string for the forwarded message body
+    const fromStr = typeof from === 'string' ? from : JSON.stringify(from);
+
     // Forward the message
     const forwardSubject = `[${originalRecipient}] ${subject}`;
 
