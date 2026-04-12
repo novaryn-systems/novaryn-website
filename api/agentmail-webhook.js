@@ -84,6 +84,6 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error('[WEBHOOK] Error:', err);
     // Always return 200 to AgentMail so it doesn't retry
-    return res.status(200).json({ ok: false, error: 'Internal error' });
+    return res.status(200).json({ ok: false, error: 'Internal error', detail: err.message || String(err) });
   }
 }
