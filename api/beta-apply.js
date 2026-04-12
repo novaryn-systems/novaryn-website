@@ -94,6 +94,11 @@ Timestamp: ${new Date().toISOString()}
       return res.status(500).json({ error: 'Email service not configured' });
     }
 
+    // Send to hk@datamatrix.dk with BCC to the sending inbox so
+    // AgentMail retains a copy for CRM / support tracking.
+    const recipients = ['hk@datamatrix.dk'];
+    const bccRecipients = inbox !== 'hk@datamatrix.dk' ? [inbox] : [];
+
     const mailResponse = await fetch(`https://api.agentmail.to/v0/inboxes/${encodeURIComponent(inbox)}/messages/send`, {
       method: 'POST',
       headers: {
@@ -101,9 +106,11 @@ Timestamp: ${new Date().toISOString()}
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        to: 'hk@datamatrix.dk',
+        to: recipients,
+        bcc: bccRecipients.length ? bccRecipients : undefined,
         subject: `AxJedi Beta Application: ${firstName} ${lastName} (${company})`,
-        text: textBody
+        text: textBody,
+        html: htmlBody
       })
     });
 
@@ -113,7 +120,7 @@ Timestamp: ${new Date().toISOString()}
       return res.status(500).json({ error: 'Failed to send application email' });
     }
 
-    console.log(`[BETA] Application received: ${firstName} ${lastName} <${email}> (${company})`);
+    console.log(`[BETA] Application received: ${firstName} ${lastName} <${email}> (${company}) → sent to ${recipients.join(', ')}`);
     return res.status(200).json({ ok: true, message: 'Application received' });
 
   } catch (err) {
