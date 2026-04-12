@@ -320,6 +320,25 @@
       margin-top: 1.2rem;
     }
 
+    .error-panel {
+      display: none;
+      border: 1px solid rgba(231, 76, 60, 0.4);
+      background: rgba(231, 76, 60, 0.08);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      margin-top: 1rem;
+    }
+
+    .error-panel.visible {
+      display: block;
+    }
+
+    .error-panel p {
+      color: #ffb2ac;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
     .submit-btn {
       border: 0;
       border-radius: 12px;
@@ -625,6 +644,10 @@
             </div>
           </div>
 
+          <div class="error-panel" id="error-panel" aria-live="polite">
+            <p id="error-panel-message"></p>
+          </div>
+
           <div class="submit-wrap">
             <button class="submit-btn" type="submit">Submit Application</button>
             <p class="submit-note">We review every application personally. Expect a response within 24 hours.</p>
@@ -795,6 +818,8 @@
 
       form.addEventListener('submit', function (event) {
         event.preventDefault();
+        var errorPanel = document.getElementById('error-panel');
+        if (errorPanel) errorPanel.classList.remove('visible');
 
         var honeypot = trimValue('website');
         if (honeypot) {
@@ -814,13 +839,13 @@
         submitBtn.textContent = 'Submitting...';
 
         var payload = {
-          firstName: trimValue('first-name'),
-          lastName: trimValue('last-name'),
+          firstName: trimValue('firstName'),
+          lastName: trimValue('lastName'),
           email: trimValue('email'),
           company: trimValue('company'),
           role: trimValue('role'),
           axVersions: selectedValues('versions'),
-          ipAddresses: trimValue('ip-addresses'),
+          ipAddresses: trimValue('ipAddresses'),
           features: selectedValues('features'),
           notes: trimValue('notes'),
           website: trimValue('website')
@@ -844,7 +869,13 @@
         .catch(function(err) {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Submit Application';
-          alert('Something went wrong: ' + err.message + '\n\nPlease email your application to axjedi@novaryn.io instead.');
+          var errorPanel = document.getElementById('error-panel');
+          var errorMessage = document.getElementById('error-panel-message');
+          if (errorPanel && errorMessage) {
+            errorMessage.textContent = 'Something went wrong. Please check all required fields and try again. If the problem persists, email your application to axjedi@novaryn.io.';
+            errorPanel.classList.add('visible');
+            errorPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         });
       });
 
