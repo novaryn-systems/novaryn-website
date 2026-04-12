@@ -641,6 +641,7 @@
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">☰</button>
       <ul class="nav-links" id="nav-links">
         <li><a href="#features">Features</a></li>
+        <li><a href="/axjedi/walkthrough/">Walkthrough</a></li>
         <li><a href="/axjedi/cases/">Case Studies</a></li>
         <li><a href="#beta">Apply for Beta</a></li>
       </ul>
@@ -715,8 +716,8 @@
 
     <section id="comparison">
       <div class="wrap">
-        <h3 class="section-title reveal">AxJedi vs. ChatGPT</h3>
-        <p class="section-lead reveal">The difference is grounded context, verified identifiers, and deployment-ready AX output.</p>
+        <h3 class="section-title reveal">AxJedi vs. Generic AI Tools</h3>
+        <p class="section-lead reveal">Generic AI tools like ChatGPT, Copilot, and Claude.ai produce code that looks right but doesn't compile in YOUR system. Here's what makes AxJedi fundamentally different.</p>
 
         <div class="table-wrap reveal">
           <table>
@@ -724,7 +725,7 @@
               <tr>
                 <th>Feature</th>
                 <th>AxJedi</th>
-                <th>ChatGPT / Copilot</th>
+                <th>Generic AI (ChatGPT, Copilot, etc.)</th>
               </tr>
             </thead>
             <tbody>
@@ -803,19 +804,19 @@
         <h3 class="section-title reveal">See AxJedi In Action</h3>
         <div class="screenshot-gallery reveal">
           <figure class="screenshot-card">
-            <a class="screenshot-link" href="assets/screenshots/full-question.jpg" data-caption="Ask your question naturally with full code context. Paste X++ methods, form code, or describe what you need. AxJedi understands AX 2009 and 2012 syntax and works with your specific codebase objects.">
+            <a class="screenshot-link walkthrough-link" href="/axjedi/walkthrough/#ask-your-question">
               <img src="assets/screenshots/thumb-question.jpg" alt="Ask your question with full code context" loading="lazy" />
               <span class="screenshot-caption">Ask your question naturally with full code context. Paste X++ methods, form code, or describe what you need. AxJedi understands AX 2009 and 2012 syntax and works with your specific codebase objects.</span>
             </a>
           </figure>
           <figure class="screenshot-card">
-            <a class="screenshot-link" href="assets/screenshots/full-answer.jpg" data-caption="Get comprehensive verified responses organized into approach, working code, detailed explanation, edge cases, and testing guidance. Every identifier is checked against your real codebase with no hallucinations.">
+            <a class="screenshot-link walkthrough-link" href="/axjedi/walkthrough/#verified-code">
               <img src="assets/screenshots/thumb-answer.jpg" alt="Comprehensive verified response with five expert sections" loading="lazy" />
               <span class="screenshot-caption">Get comprehensive verified responses organized into approach, working code, detailed explanation, edge cases, and testing guidance. Every identifier is checked against your real codebase with no hallucinations.</span>
             </a>
           </figure>
           <figure class="screenshot-card">
-            <a class="screenshot-link" href="assets/screenshots/full-diff.jpg" data-caption="See exactly what changed with color-coded diffs. Green for additions, red for removals. Review modifications line by line before applying anything, with full method context so nothing is lost.">
+            <a class="screenshot-link walkthrough-link" href="/axjedi/walkthrough/#diff-view">
               <img src="assets/screenshots/thumb-diff.jpg" alt="Code changes: green for additions, red for removals" loading="lazy" />
               <span class="screenshot-caption">See exactly what changed with color-coded diffs. Green for additions, red for removals. Review modifications line by line before applying anything, with full method context so nothing is lost.</span>
             </a>
@@ -958,6 +959,7 @@
       if (lightbox && lightboxImage && lightboxCaption && screenshotLinks.length) {
         screenshotLinks.forEach(function (link) {
           link.addEventListener('click', function (event) {
+            if (link.classList.contains('walkthrough-link')) return;
             event.preventDefault();
             var fullImage = link.getAttribute('href');
             var caption = link.getAttribute('data-caption') || '';

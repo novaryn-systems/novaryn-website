@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AxJedi Walkthrough | Novaryn</title>
+  <meta name="description" content="A detailed visual walkthrough of the AxJedi interface from secure login to verified code export and interactive codebase exploration." />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --highlight: #4a9eff;
+      --text: #eef1f6;
+      --muted: #a2aab8;
+      --success: #2ecc71;
+      --danger: #e74c3c;
+      --panel: linear-gradient(135deg, #1a1f2e 0%, #0f1115 100%);
+      --line: rgba(255, 255, 255, 0.08);
+      --soft: rgba(74, 158, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, 100% - 2.5rem);
+      margin: 0 auto;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 17, 21, 0.86);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .brand {
+      font-size: 1.45rem;
+      font-weight: 850;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #4a9eff 0%, #cfd6e4 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .byline {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-link {
+      padding: 0.52rem 0.85rem;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-link:hover {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      border-color: rgba(74, 158, 255, 0.45);
+      background: rgba(74, 158, 255, 0.12);
+    }
+
+    .hero {
+      padding: 4.75rem 0 3.5rem;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(74, 158, 255, 0.18) 0%, transparent 30%),
+        radial-gradient(circle at 95% 5%, rgba(46, 204, 113, 0.08) 0%, transparent 24%);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      color: var(--highlight);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.74rem;
+      font-weight: 760;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4.3vw, 3.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      max-width: 22ch;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subhead {
+      color: var(--muted);
+      font-size: clamp(1.02rem, 2.15vw, 1.2rem);
+      max-width: 74ch;
+    }
+
+    main section {
+      padding: 3.15rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    main section:last-of-type {
+      border-bottom: none;
+    }
+
+    .walkthrough-block {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .walkthrough-block.text-only {
+      grid-template-columns: 1fr;
+    }
+
+    .media-stack {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .media-stack.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .screenshot-card {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+      overflow: hidden;
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .screenshot-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.34);
+    }
+
+    .screenshot-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      display: block;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .screenshot-caption {
+      padding: 0.74rem 0.86rem 0.9rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .content-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.2rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .content-panel h2 {
+      font-size: clamp(1.32rem, 2.7vw, 2rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+      line-height: 1.25;
+    }
+
+    .content-panel p {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .answer-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.72rem;
+      border: 1px solid rgba(74, 158, 255, 0.35);
+      background: rgba(74, 158, 255, 0.1);
+      color: #d9e8ff;
+      border-radius: 999px;
+      padding: 0.24rem 0.68rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      width: fit-content;
+    }
+
+    .answer-number {
+      color: var(--highlight);
+      font-weight: 800;
+    }
+
+    .cta {
+      padding: 4rem 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 15% 30%, rgba(74, 158, 255, 0.13) 0%, transparent 28%),
+        radial-gradient(circle at 90% 60%, rgba(207, 214, 228, 0.07) 0%, transparent 30%);
+    }
+
+    .cta-panel {
+      border: 1px solid rgba(74, 158, 255, 0.28);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(26, 31, 46, 0.94) 0%, rgba(15, 17, 21, 0.94) 100%);
+      padding: 1.4rem;
+    }
+
+    .cta h2 {
+      margin-bottom: 0.55rem;
+      font-size: clamp(1.45rem, 3vw, 2.2rem);
+      letter-spacing: -0.025em;
+    }
+
+    .cta p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 0.6rem 1rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .btn-primary {
+      background: var(--highlight);
+      color: #07121f;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #d9e8ff;
+      border-color: rgba(74, 158, 255, 0.35);
+    }
+
+    footer {
+      padding: 1.9rem 0 2.3rem;
+      background: #0a0c11;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 0.84rem;
+      opacity: 0.9;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(4, 8, 12, 0.88);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 220ms ease, visibility 220ms ease;
+      z-index: 999;
+      padding: 1.25rem;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .lightbox-content {
+      max-width: 90vw;
+      max-height: 80vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
+      animation: lightboxIn 220ms ease;
+    }
+
+    .lightbox-content img {
+      display: block;
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 12px;
+      object-fit: contain;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.42);
+    }
+
+    .lightbox-caption {
+      color: #e8f1ff;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 0.8rem;
+      right: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(9, 12, 18, 0.7);
+      color: #fff;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    @keyframes lightboxIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .walkthrough-block {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .media-stack.two {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(1120px, 100% - 1.25rem);
+      }
+
+      .nav-inner {
+        align-items: flex-start;
+        padding: 0.8rem 0;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding-top: 3.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-nav" aria-label="Main">
+    <div class="container nav-inner">
+      <div class="brand-wrap">
+        <a class="brand" href="/axjedi/">AxJedi</a>
+        <span class="byline">by Novaryn</span>
+      </div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a class="nav-link" href="/axjedi/">Home</a>
+        <a class="nav-link" href="/axjedi/features/">Features</a>
+        <a class="nav-link active" href="/axjedi/walkthrough/" aria-current="page">Walkthrough</a>
+        <a class="nav-link" href="/axjedi/cases/">Case Studies</a>
+        <a class="nav-link" href="/axjedi/apply/">Apply for Beta</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Product Walkthrough</p>
+      <h1>See Every Step of an AxJedi Session</h1>
+      <p class="hero-subhead">From login to verified code export - a detailed look at how AxJedi analyzes your question, generates verified X++ code, and delivers actionable answers grounded in your real codebase.</p>
+    </div>
+  </section>
+
+  <main>
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/login.png" data-lightbox-caption="Secure Login">
+              <img src="../assets/screenshots/walkthrough/login.png" alt="AxJedi secure login screen" loading="lazy" />
+              <span class="screenshot-caption">Login screen with secure account access</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <h2>Secure Login</h2>
+          <p>AxJedi starts with enterprise-grade access controls: individual developer accounts, IP restriction, and rate limiting. Each user gets isolated session history and usage tracking so teams can audit activity while keeping workstreams separate.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack two">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/question-empty.png" data-lightbox-caption="Question Form (Empty)">
+              <img src="../assets/screenshots/walkthrough/question-empty.png" alt="AxJedi question form before input" loading="lazy" />
+              <span class="screenshot-caption">Question form before entering a query</span>
+            </a>
+          </article>
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/question-filled.png" data-lightbox-caption="Question Form (Filled)">
+              <img src="../assets/screenshots/walkthrough/question-filled.png" alt="AxJedi question form with populated fields and code context" loading="lazy" />
+              <span class="screenshot-caption">Question form with AX instance, snapshot, and code context</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <h2>Ask Your Question</h2>
+          <p>Select your AX instance and extraction snapshot, then describe the challenge in the Question field. Paste relevant X++ into Code Context, add optional Instructions to steer the assistant, and upload screenshots when visuals help clarify the issue.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/progress.png" data-lightbox-caption="Real-Time Analysis Progress">
+              <img src="../assets/screenshots/walkthrough/progress.png" alt="AxJedi analysis timeline with progress metrics" loading="lazy" />
+              <span class="screenshot-caption">Analysis timeline with live progress telemetry</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <h2>Real-Time Analysis Progress</h2>
+          <p>The Analysis Timeline shows an animated progress bar with performance markers, a live elapsed timer, and a sparkline for the last 20 query durations. Rotating status messages describe ongoing steps like graph search and identifier cross-reference. If the fast model cannot fully verify output, AxJedi automatically escalates to deep analysis mode.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/summary.png" data-lightbox-caption="Answer Summary">
+              <img src="../assets/screenshots/walkthrough/summary.png" alt="AxJedi answer summary showing the original question" loading="lazy" />
+              <span class="screenshot-caption">Answer begins by restating your question context</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <h2>Your Question, Understood</h2>
+          <p>AxJedi begins by showing your original question so you can verify it interpreted the problem correctly. The full response is then structured into five expert sections for implementation, validation, and learning.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/approach.png" data-lightbox-caption="Section 1: Approach">
+              <img src="../assets/screenshots/walkthrough/approach.png" alt="AxJedi approach section describing strategy" loading="lazy" />
+              <span class="screenshot-caption">Section 1: strategy before implementation</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <p class="answer-kicker"><span class="answer-number">1</span> Answer Section</p>
+          <h2>Section 1: Approach</h2>
+          <p>The strategy section explains how AxJedi will solve the problem before any code appears. It outlines architecture, relevant AX patterns, and the reasoning behind the selected path so you can validate direction before implementation details.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/code.png" data-lightbox-caption="Section 2: Verified Code">
+              <img src="../assets/screenshots/walkthrough/code.png" alt="AxJedi verified X++ code output" loading="lazy" />
+              <span class="screenshot-caption">Section 2: verified X++ output with copy support</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <p class="answer-kicker"><span class="answer-number">2</span> Answer Section</p>
+          <h2>Section 2: Verified Code</h2>
+          <p>AxJedi returns working X++ verified against your real codebase. Every class name, table name, method name, and enum value is checked against 500,000+ indexed entries. One click copies production-ready code that follows your team patterns, not generic templates.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/codebase-fit.png" data-lightbox-caption="Section 3: Codebase Fit">
+              <img src="../assets/screenshots/walkthrough/codebase-fit.png" alt="AxJedi codebase fit analysis" loading="lazy" />
+              <span class="screenshot-caption">Section 3: integration fit with your existing model</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <p class="answer-kicker"><span class="answer-number">3</span> Answer Section</p>
+          <h2>Section 3: Codebase Fit</h2>
+          <p>This section explains how the generated implementation integrates with your current AX landscape. AxJedi references your actual classes, tables, and patterns to confirm the solution is native to your system rather than a foreign implant.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/explanation.png" data-lightbox-caption="Section 4: Detailed Explanation">
+              <img src="../assets/screenshots/walkthrough/explanation.png" alt="AxJedi detailed explanation table" loading="lazy" />
+              <span class="screenshot-caption">Section 4: method-level explanation and rationale</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <p class="answer-kicker"><span class="answer-number">4</span> Answer Section</p>
+          <h2>Section 4: Detailed Explanation</h2>
+          <p>A structured reference table breaks down each method and code block: what it does, why it matters, and how core logic works. The explanation also highlights common mistakes and the business impact of the chosen approach.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/learning-point.png" data-lightbox-caption="Section 5: Learning Point">
+              <img src="../assets/screenshots/walkthrough/learning-point.png" alt="AxJedi learning point section" loading="lazy" />
+              <span class="screenshot-caption">Section 5: deeper AX pattern guidance</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <p class="answer-kicker"><span class="answer-number">5</span> Answer Section</p>
+          <h2>Section 5: Learning Point</h2>
+          <p>Every answer includes a teaching layer with deeper AX knowledge: core design patterns, version-specific concerns, practical debugging advice, and related approaches you can reuse in future tasks.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/follow-up.png" data-lightbox-caption="Continue the Conversation">
+              <img src="../assets/screenshots/walkthrough/follow-up.png" alt="AxJedi follow-up question flow" loading="lazy" />
+              <span class="screenshot-caption">Follow-up queries keep previous context in scope</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <h2>Continue the Conversation</h2>
+          <p>Need more depth? Ask follow-up questions and AxJedi retains full context from the prior exchange. The Context Size indicator at the top shows remaining capacity so you can continue while token budget is available, or start a fresh session whenever needed.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/code-changes.png" data-lightbox-caption="Review Changes with Diff View">
+              <img src="../assets/screenshots/walkthrough/code-changes.png" alt="AxJedi diff view with additions and removals" loading="lazy" />
+              <span class="screenshot-caption">Color-coded diffs with full method context</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <h2>Review Changes with Diff View</h2>
+          <p>Inspect exactly what changed using color-coded diffs: green for additions and red for removals. Review each line before applying updates, with surrounding method context preserved so nothing is lost in review.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block text-only">
+        <article class="content-panel">
+          <h2>One-Click XPO Export</h2>
+          <p>When the code looks right, export a properly formatted XPO file for direct import into your AX environment. No manual copy-paste and no formatting cleanup. Click export, download the file, and import into AX.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/context.png" data-lightbox-caption="Transparent Token Usage">
+              <img src="../assets/screenshots/walkthrough/context.png" alt="AxJedi context size and token usage indicator" loading="lazy" />
+              <span class="screenshot-caption">Live context usage visibility</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <h2>Transparent Token Usage</h2>
+          <p>The Context Size indicator shows exactly how much model capacity is in use. Unlike opaque tools, AxJedi makes approaching limits visible so you can decide when to split queries for reliable analysis quality.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="container walkthrough-block">
+        <div class="media-stack">
+          <article class="screenshot-card">
+            <a class="screenshot-link" href="#" data-lightbox-src="../assets/screenshots/walkthrough/graph.png" data-lightbox-caption="Interactive Codebase Graph">
+              <img src="../assets/screenshots/walkthrough/graph.png" alt="AxJedi interactive codebase graph explorer" loading="lazy" />
+              <span class="screenshot-caption">180,000+ node graph of entities and dependencies</span>
+            </a>
+          </article>
+        </div>
+        <article class="content-panel">
+          <h2>Interactive Codebase Graph</h2>
+          <p>Explore your codebase as an interactive graph with 180,000+ nodes across classes, tables, forms, and their relationships. Search any entity and inspect its dependency network in detail.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <section class="cta">
+    <div class="container">
+      <div class="cta-panel">
+        <h2>Ready to Try It Yourself?</h2>
+        <p>Use AxJedi on your own AX codebase and see verified, codebase-grounded output in your actual workflow.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="/axjedi/apply/">Apply for Beta Access</a>
+          <a class="btn btn-secondary" href="/axjedi/cases/">See Real Examples -&gt;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div class="brand-wrap">
+          <a class="brand" href="/axjedi/">AxJedi</a>
+          <span class="byline">by Novaryn</span>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="/axjedi/">Home</a>
+          <a href="/axjedi/features/">Features</a>
+          <a href="/axjedi/walkthrough/" aria-current="page">Walkthrough</a>
+          <a href="/axjedi/cases/">Case Studies</a>
+          <a href="/axjedi/apply/">Apply for Beta</a>
+        </nav>
+      </div>
+      <p class="footer-note">&copy; 2026 Novaryn Systems</p>
+      <p class="footer-note" style="margin-top:0.35rem;">Powered by frontier AI models from Anthropic</p>
+      <p class="footer-note" style="margin-top:0.5rem;font-size:0.78rem;color:#7a8290;">All code generated by AxJedi is provided as-is, without warranty of any kind. Use of generated code is entirely at your own risk. Novaryn Systems accepts no liability for any damages arising from the use of AxJedi or its output.</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Expanded screenshot view">
+    <button class="lightbox-close" type="button" aria-label="Close image preview">&times;</button>
+    <div class="lightbox-content">
+      <img src="" alt="Expanded screenshot" id="lightbox-image" />
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImage = document.getElementById('lightbox-image');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      const closeButton = lightbox.querySelector('.lightbox-close');
+      const links = document.querySelectorAll('[data-lightbox-src]');
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImage.src = '';
+        lightboxCaption.textContent = '';
+      }
+
+      links.forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          lightboxImage.src = link.getAttribute('data-lightbox-src');
+          lightboxCaption.textContent = link.getAttribute('data-lightbox-caption') || '';
+          lightbox.classList.add('open');
+          lightbox.setAttribute('aria-hidden', 'false');
+        });
+      });
+
+      closeButton.addEventListener('click', closeLightbox);
+
+      lightbox.addEventListener('click', function (event) {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
