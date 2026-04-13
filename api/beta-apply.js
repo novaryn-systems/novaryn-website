@@ -1,5 +1,5 @@
 // Vercel Serverless Function — AxJedi Beta Application Handler
-// Receives form POST, sends email via AgentMail to hk@datamatrix.dk
+// Receives form POST, sends email via AgentMail inbox + optional Discord webhook backup
 
 export default async function handler(req, res) {
   // CORS headers
@@ -85,46 +85,119 @@ Timestamp: ${new Date().toISOString()}
 <p style="color: #a2aab8; font-size: 13px;">Submitted from novaryn.io/axjedi/apply/ at ${new Date().toISOString()}</p>
 </div>`;
 
+    const applicationDetails = {
+      firstName,
+      lastName,
+      email,
+      company,
+      role,
+      axVersions,
+      ipAddresses,
+      features,
+      notes,
+      timestamp: new Date().toISOString()
+    };
+
+    async function notifyDiscordWebhook() {
+      const webhookUrl = process.env.DISCORD_BETA_WEBHOOK;
+      if (!webhookUrl) {
+        return { attempted: false, ok: false, skipped: true };
+      }
+
+      const webhookResp = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          embeds: [{
+            title: 'New AxJedi Beta Application',
+            color: 4897023,
+            fields: [
+              { name: 'Name', value: `${firstName} ${lastName}`, inline: true },
+              { name: 'Email', value: email, inline: true },
+              { name: 'Company', value: company, inline: true },
+              { name: 'Role', value: role, inline: true },
+              { name: 'AX Versions', value: axVersions, inline: true },
+              { name: 'IP', value: ipAddresses, inline: true }
+            ],
+            timestamp: applicationDetails.timestamp
+          }]
+        })
+      });
+
+      if (!webhookResp.ok) {
+        const webhookErrText = await webhookResp.text();
+        throw new Error(`Discord webhook error: ${webhookResp.status} ${webhookErrText}`);
+      }
+
+      return { attempted: true, ok: true, skipped: false };
+    }
+
     // Send via AgentMail API
     const agentmailKey = process.env.AGENTMAIL_API_KEY;
-    const inbox = process.env.AGENTMAIL_INBOX || 'axjedi@agentmail.to';
+    const inbox = process.env.AGENTMAIL_INBOX || 'axjedi@novaryn.io';
 
     if (!agentmailKey) {
       console.error('[BETA] No AGENTMAIL_API_KEY configured');
-      return res.status(500).json({ error: 'Email service not configured' });
+      try {
+        await notifyDiscordWebhook();
+      } catch (discordErr) {
+        console.error('[BETA] Discord fallback failed (no AgentMail key):', discordErr);
+        return res.status(200).json({ ok: true, fallback: true, application: applicationDetails });
+      }
+      return res.status(200).json({ ok: true, message: 'Application received' });
     }
 
-    // Send to hk@datamatrix.dk with BCC to the sending inbox so
-    // AgentMail retains a copy for CRM / support tracking.
-    const recipients = ['hk@datamatrix.dk'];
-    const bccRecipients = inbox !== 'hk@datamatrix.dk' ? [inbox] : [];
+    let mailSent = false;
+    try {
+      const mailResponse = await fetch(`https://api.agentmail.to/v0/inboxes/${encodeURIComponent(inbox)}/messages/send`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${agentmailKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          to: [inbox],
+          subject: `AxJedi Beta Application: ${firstName} ${lastName} (${company})`,
+          text: textBody,
+          html: htmlBody
+        })
+      });
 
-    const mailResponse = await fetch(`https://api.agentmail.to/v0/inboxes/${encodeURIComponent(inbox)}/messages/send`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${agentmailKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        to: recipients,
-        bcc: bccRecipients.length ? bccRecipients : undefined,
-        subject: `AxJedi Beta Application: ${firstName} ${lastName} (${company})`,
-        text: textBody,
-        html: htmlBody
-      })
-    });
+      if (!mailResponse.ok) {
+        const errText = await mailResponse.text();
+        throw new Error(`${mailResponse.status} ${errText}`);
+      }
 
-    if (!mailResponse.ok) {
-      const errText = await mailResponse.text();
-      console.error(`[BETA] AgentMail error: ${mailResponse.status} ${errText}`);
-      return res.status(500).json({ error: 'Failed to send application email' });
+      mailSent = true;
+    } catch (mailErr) {
+      console.error('[BETA] AgentMail send failed:', mailErr);
     }
 
-    console.log(`[BETA] Application received: ${firstName} ${lastName} <${email}> (${company}) → sent to ${recipients.join(', ')}`);
-    return res.status(200).json({ ok: true, message: 'Application received' });
+    let webhookSent = false;
+    let webhookAttempted = false;
+    try {
+      const webhookResult = await notifyDiscordWebhook();
+      webhookSent = webhookResult.ok;
+      webhookAttempted = webhookResult.attempted;
+    } catch (discordErr) {
+      webhookAttempted = true;
+      console.error('[BETA] Discord webhook send failed:', discordErr);
+    }
+
+    const fallback = !mailSent && (!webhookAttempted || !webhookSent);
+
+    if (fallback) {
+      console.error('[BETA] Both delivery channels failed; returning fallback payload');
+      return res.status(200).json({ ok: true, fallback: true, application: applicationDetails });
+    }
+
+    console.log(`[BETA] Application received: ${firstName} ${lastName} <${email}> (${company}) | mailSent=${mailSent} webhookSent=${webhookSent}`);
+    return res.status(200).json({ ok: true, message: 'Application received', fallback: false });
 
   } catch (err) {
     console.error('[BETA] Error:', err);
-    return res.status(500).json({ error: 'Failed to submit application' });
+    return res.status(200).json({ ok: true, fallback: true });
   }
 }
