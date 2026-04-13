@@ -3,8 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Apply for Beta Access | AxJedi</title>
-  <meta name="description" content="Apply for AxJedi beta access and get running on your AX codebase in 24 hours." />
+  <title>Apply for Beta Access | AxJedi by Novaryn Systems</title>
+  <meta name="description" content="Apply for AxJedi beta access to speed AX 2009 and AX 2012 X++ code generation with grounded outputs, verification checks, and fast production onboarding." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.novaryn.io/axjedi/apply/" />
+  <meta property="og:title" content="Apply for Beta Access | AxJedi by Novaryn Systems" />
+  <meta property="og:description" content="Apply for AxJedi beta access to speed AX 2009 and AX 2012 X++ code generation with grounded outputs, verification checks, and fast production onboarding." />
+  <meta property="og:url" content="https://www.novaryn.io/axjedi/apply/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.novaryn.io/axjedi/assets/og-image.png" />
+  <meta property="og:site_name" content="AxJedi by Novaryn Systems" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Apply for Beta Access | AxJedi by Novaryn Systems" />
+  <meta name="twitter:description" content="Apply for AxJedi beta access to speed AX 2009 and AX 2012 X++ code generation with grounded outputs, verification checks, and fast production onboarding." />
+  <meta name="twitter:image" content="https://www.novaryn.io/axjedi/assets/og-image.png" />
   <style>
     :root {
       --bg: #0f1115;
@@ -859,6 +871,22 @@
         .then(function(resp) { return resp.json(); })
         .then(function(data) {
           if (data.ok) {
+            if (data.fallback === true) {
+              var fallbackSubject = 'AxJedi Beta Application - ' + trimValue('firstName') + ' ' + trimValue('lastName');
+              var fallbackMailto = 'mailto:axjedi@novaryn.io'
+                + '?subject=' + encodeURIComponent(fallbackSubject.trim())
+                + '&body=' + encodeURIComponent(buildMailtoBody());
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Submit Application';
+              var fallbackPanel = document.getElementById('error-panel');
+              var fallbackMessage = document.getElementById('error-panel-message');
+              if (fallbackPanel && fallbackMessage) {
+                fallbackMessage.innerHTML = 'We couldn\\'t submit automatically. Please <a href="' + fallbackMailto + '" style="color:#ffd1ca;text-decoration:underline;">click here to email your application</a>.';
+                fallbackPanel.classList.add('visible');
+                fallbackPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+              return;
+            }
             form.style.display = 'none';
             successPanel.classList.add('visible');
             successPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });

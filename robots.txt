@@ -6,3 +6,4 @@ Disallow: /admin/
 # Allow search engines to index main content only
 Allow: /
 Allow: /index.html
+Sitemap: https://www.novaryn.io/sitemap.xml
