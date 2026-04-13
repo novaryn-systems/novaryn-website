@@ -881,7 +881,7 @@
               var fallbackPanel = document.getElementById('error-panel');
               var fallbackMessage = document.getElementById('error-panel-message');
               if (fallbackPanel && fallbackMessage) {
-                fallbackMessage.innerHTML = 'We couldn\\'t submit automatically. Please <a href="' + fallbackMailto + '" style="color:#ffd1ca;text-decoration:underline;">click here to email your application</a>.';
+                fallbackMessage.innerHTML = 'We could not submit automatically. Please <a href="' + fallbackMailto + '" style="color:#ffd1ca;text-decoration:underline;">click here to email your application</a>.';
                 fallbackPanel.classList.add('visible');
                 fallbackPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
               }
