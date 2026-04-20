@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Apply for Beta Access | AxJedi by Novaryn Systems</title>
-  <meta name="description" content="Apply for AxJedi beta access to speed AX 2009 and AX 2012 X++ code generation with grounded outputs, verification checks, and fast production onboarding." />
+  <title>Apply for Free Trial | AxJedi by Novaryn Systems</title>
+  <meta name="description" content="Apply for an AxJedi free trial to speed AX 2009 and AX 2012 X++ code generation with grounded outputs, verification checks, and fast production onboarding." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.novaryn.io/axjedi/apply/" />
-  <meta property="og:title" content="Apply for Beta Access | AxJedi by Novaryn Systems" />
-  <meta property="og:description" content="Apply for AxJedi beta access to speed AX 2009 and AX 2012 X++ code generation with grounded outputs, verification checks, and fast production onboarding." />
+  <meta property="og:title" content="Apply for Free Trial | AxJedi by Novaryn Systems" />
+  <meta property="og:description" content="Apply for an AxJedi free trial to speed AX 2009 and AX 2012 X++ code generation with grounded outputs, verification checks, and fast production onboarding." />
   <meta property="og:url" content="https://www.novaryn.io/axjedi/apply/" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://www.novaryn.io/axjedi/assets/og-image.png" />
   <meta property="og:site_name" content="AxJedi by Novaryn Systems" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Apply for Beta Access | AxJedi by Novaryn Systems" />
-  <meta name="twitter:description" content="Apply for AxJedi beta access to speed AX 2009 and AX 2012 X++ code generation with grounded outputs, verification checks, and fast production onboarding." />
+  <meta name="twitter:title" content="Apply for Free Trial | AxJedi by Novaryn Systems" />
+  <meta name="twitter:description" content="Apply for an AxJedi free trial to speed AX 2009 and AX 2012 X++ code generation with grounded outputs, verification checks, and fast production onboarding." />
   <meta name="twitter:image" content="https://www.novaryn.io/axjedi/assets/og-image.png" />
   <style>
     :root {
@@ -522,9 +522,9 @@
 
   <section class="hero">
     <div class="container">
-      <p class="eyebrow">Beta Program</p>
+      <p class="eyebrow">Free Trial</p>
       <h1>Help Us Build the Best AX Code Tool Ever Made</h1>
-      <p class="hero-subhead">AxJedi's beta program exists for one reason: to make this tool as useful as possible for real AX teams. We need your honest feedback - what works, what doesn't, what's missing, and what you wish it could do. Your input directly shapes the product. Apply only if you're willing to share your experience as you use it. In return, you get early access and a tool built around your actual needs.</p>
+      <p class="hero-subhead">AxJedi's free trial program exists for one reason: to make this tool as useful as possible for real AX teams. We need your honest feedback - what works, what doesn't, what's missing, and what you wish it could do. Your input directly shapes the product. Apply only if you're willing to share your experience as you use it. In return, you get early access and a tool built around your actual needs.</p>
     </div>
   </section>
 
@@ -557,7 +557,7 @@
 
     <section>
       <div class="container form-shell">
-        <h2>Beta Application Form</h2>
+        <h2>Free Trial Application Form</h2>
         <p class="section-intro">Complete the required fields below. We will review and reply within 24 hours.</p>
 
         <form id="beta-form" class="panel" novalidate>
@@ -808,7 +808,7 @@
 
       function buildMailtoBody() {
         var lines = [];
-        lines.push('AxJedi Beta Application');
+        lines.push('AxJedi Free Trial Application');
         lines.push('=======================');
         lines.push('');
         lines.push('Personal Information');
@@ -876,7 +876,7 @@
         .then(function(data) {
           if (data.ok) {
             if (data.fallback === true) {
-              var fallbackSubject = 'AxJedi Beta Application - ' + trimValue('firstName') + ' ' + trimValue('lastName');
+              var fallbackSubject = 'AxJedi Free Trial Application - ' + trimValue('firstName') + ' ' + trimValue('lastName');
               var fallbackMailto = 'mailto:axjedi@novaryn.io'
                 + '?subject=' + encodeURIComponent(fallbackSubject.trim())
                 + '&body=' + encodeURIComponent(buildMailtoBody());
