@@ -32,8 +32,8 @@ export default async function handler(req, res) {
     const originalRecipient = Array.isArray(to) ? to.join(', ') : (to || inboxId || 'unknown');
 
     const agentmailKey = process.env.AGENTMAIL_API_KEY;
-    // Use a dedicated forwarding inbox, or fall back to axjedi@novaryn.io
-    const forwardFromInbox = process.env.AGENTMAIL_INBOX || 'axjedi@novaryn.io';
+    // Use a dedicated forwarding inbox, or fall back to hello@novaryn.io
+    const forwardFromInbox = process.env.AGENTMAIL_INBOX || 'hello@novaryn.io';
     const forwardTo = 'hk@datamatrix.dk';
 
     if (!agentmailKey) {

@@ -215,7 +215,6 @@
           <img src="../assets/novaryn-logo.png" alt="Novaryn" />
         </a>
         <nav class="header-links" aria-label="Top navigation">
-          <a href="/axjedi/">AxJedi</a>
           <a href="mailto:hello@novaryn.io">Contact</a>
         </nav>
       </div>
@@ -227,25 +226,25 @@
       <div class="hero-intro">
         <div class="eyebrow">Security Measures</div>
         <h1>Layered Security by Design</h1>
-        <p class="subtext">AxJedi uses multiple defensive controls across network, transport, application, and operational layers.</p>
+        <p class="subtext">Novaryn systems use defensive controls across network, transport, application, and operational layers.</p>
       </div>
 
       <section class="card">
         <h2>Network and Edge Controls</h2>
         <ul>
-          <li>Cisco ASA firewall with source IP allowlist rules.</li>
-          <li>Caddy reverse proxy enforcing TLS 1.3 with Let's Encrypt certificates.</li>
-          <li>Application-level IP allowlist checks to enforce approved access paths.</li>
+          <li>Source IP allowlist rules where customer deployments require them.</li>
+          <li>TLS-secured reverse proxy access for public endpoints.</li>
+          <li>Application-level access controls for approved users and workflows.</li>
         </ul>
       </section>
 
       <section class="card">
         <h2>Authentication and Session Security</h2>
         <ul>
-          <li>Flask-Login for authenticated session handling.</li>
-          <li>bcrypt password hashing for credential storage.</li>
-          <li>Secure cookie configuration and CSRF token protection.</li>
-          <li>Login rate limiting to reduce brute-force risk.</li>
+          <li>Authenticated session handling for private systems.</li>
+          <li>Hashed credential storage where local credentials are used.</li>
+          <li>Secure cookie configuration and CSRF protection where applicable.</li>
+          <li>Rate limiting to reduce brute-force and misuse risk.</li>
         </ul>
       </section>
 
@@ -282,8 +281,6 @@
       <div class="footer-section">
         <h4>Resources</h4>
         <ul>
-          <li><a href="/axjedi/">AxJedi Product</a></li>
-          <li><a href="/axjedi/cases/">Case Studies</a></li>
           <li><a href="#">Status</a></li>
           <li><a href="mailto:hello@novaryn.io">Support</a></li>
         </ul>
